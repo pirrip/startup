@@ -1,0 +1,24 @@
+spring:
+  datasource:
+    driverClassName: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://192.168.1.77:33306/rtadb
+    username: RTAUSER
+    password: R2P2T2NT1@
+    hikari:
+      maximum-pool-size: 1
+  mustache: 
+    suffix: .html
+  servlet:
+    multipart:
+      max-file-size: 1000MB
+      max-request-size: 1000MB
+server:
+  servlet:
+    context-path: /web
+
+mybatis:
+  type-aliases-package: com.repetentia.web.*.model
+  mapper-locations: sql/mappers/*/*.xml
+  mapper-scan-package: com.repetentia
+active:
+  site: rta
