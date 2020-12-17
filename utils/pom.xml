@@ -9,4 +9,11 @@
     <name>utils</name>
     <packaging>jar</packaging>
     <description>공통 모듈</description>
+    <dependencies>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.9.1</version>
+        </dependency>
+    </dependencies>
 </project>
