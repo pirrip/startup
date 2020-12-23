@@ -12,9 +12,6 @@ import org.apache.ibatis.plugin.Plugin;
 import org.apache.ibatis.plugin.Signature;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.util.StringUtils;
-
-import com.nhncorp.lucy.security.xss.XssPreventer;
 
 @Intercepts({ @Signature(type = Executor.class, method = "update", args = { MappedStatement.class, Object.class }) })
 public class XssSaveInterceptor implements Interceptor {
@@ -50,10 +47,10 @@ public class XssSaveInterceptor implements Interceptor {
         return invocation.proceed();
     }
 
-    private String escape(String dirty) {
-        String clean = XssPreventer.escape(StringUtils.trimWhitespace(dirty));
-        return clean;
-    }
+//    private String escape(String dirty) {
+//        String clean = XssPreventer.escape(StringUtils.trimWhitespace(dirty));
+//        return clean;
+//    }
 
     @Override
     public Object plugin(Object target) {

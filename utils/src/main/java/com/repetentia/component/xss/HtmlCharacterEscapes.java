@@ -1,5 +1,11 @@
 package com.repetentia.component.xss;
 
+import org.apache.commons.text.StringEscapeUtils;
+
+import com.fasterxml.jackson.core.SerializableString;
+import com.fasterxml.jackson.core.io.CharacterEscapes;
+import com.fasterxml.jackson.core.io.SerializedString;
+
 public class HtmlCharacterEscapes extends CharacterEscapes {
     private static final long serialVersionUID = 3233809479635732716L;
     private final int[] asciiEscapes;

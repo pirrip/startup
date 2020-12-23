@@ -25,7 +25,7 @@ public class FileInfo {
     @Column(name = "TIKA_TYPE")
     private String tikaType;
     @Column(name = "IS_USE")
-    private Boolean isUse;
+    private boolean use;
     @Column(name = "CRDT")
     private LocalDateTime crdt;
 }
