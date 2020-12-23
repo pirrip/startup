@@ -96,7 +96,6 @@ public class FileUploadService {
 			int extIdx = originalFilename.lastIndexOf(".");
 			String fileType = originalFilename.substring(extIdx + 1);
 			log.info("# originalFilename [{}]", originalFilename);
-//            log.info("# name [{}]", name);
 //            fileInfo.setFilename(filename);
 			fileInfo.setOriginalFilename(originalFilename);
 			fileInfo.setFileType(fileType);
