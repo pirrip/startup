@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.apache.ibatis.session.SqlSession;
 import org.apache.tika.Tika;
 import org.apache.tika.metadata.Metadata;
 import org.apache.tika.metadata.TikaCoreProperties;
@@ -12,17 +13,23 @@ import org.apache.tika.parser.AutoDetectParser;
 import org.apache.tika.parser.ParseContext;
 import org.apache.tika.parser.Parser;
 import org.apache.tika.sax.BodyContentHandler;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.repetentia.component.utils.FileUtils;
+import com.repetentia.web.rtadb.model.FileHolder;
 import com.repetentia.web.rtadb.model.FileInfo;
 import com.repetentia.web.rtadb.model.FileMeta;
+import com.repetentia.web.table.mapper.TableMapper;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
 public class FileUploadService {
+	@Autowired
+	SqlSession sqlSession;
 	public FileMeta detect(InputStream content) {
 		Parser parser = new AutoDetectParser();
 		BodyContentHandler handler = new BodyContentHandler();
@@ -90,13 +97,14 @@ public class FileUploadService {
 
 	public void upload(List<MultipartFile> files) {
 		for (MultipartFile multipartFile : files) {
+			String filename = FileUtils.generate();
 			FileInfo fileInfo = new FileInfo();
 			String contentType = multipartFile.getContentType();
 			String originalFilename = multipartFile.getOriginalFilename();
 			int extIdx = originalFilename.lastIndexOf(".");
 			String fileType = originalFilename.substring(extIdx + 1);
 			log.info("# originalFilename [{}]", originalFilename);
-//            fileInfo.setFilename(filename);
+            fileInfo.setFilename(filename);
 			fileInfo.setOriginalFilename(originalFilename);
 			fileInfo.setFileType(fileType);
 			fileInfo.setMimeType(contentType);
@@ -107,7 +115,15 @@ public class FileUploadService {
 				String type = new Tika().detect(is);
 				log.info("# {}", type);
 				FileMeta fileMeta = detect(is);
+				fileMeta.setFilename(filename);
 				fileInfo.setTikaType(fileMeta.getFormat());
+				fileInfo.setFilename(filename);
+				FileHolder fileHolder = new FileHolder();
+				fileHolder.setFile(multipartFile.getBytes());
+				fileHolder.setFilename(filename);
+				sqlSession.getMapper(TableMapper.class).insert(fileInfo);
+				sqlSession.getMapper(TableMapper.class).insert(fileMeta);
+				sqlSession.getMapper(TableMapper.class).insert(fileHolder);
 				log.info("# META - {}", fileMeta);
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -116,10 +132,6 @@ public class FileUploadService {
 	}
 
 	public static void main(String[] args) {
-		String originalFilename = "Vue.js 2 cookbook_ build modern, interactive web applications with Vue.js ( PDFDrive.com ).pdf";
-		int extIdx = "Vue.js 2 cookbook_ build modern, interactive web applications with Vue.js ( PDFDrive.com ).pdf"
-				.lastIndexOf(".");
-		String fileType = originalFilename.substring(extIdx + 1);
-		System.out.println(fileType);
+		
 	}
 }

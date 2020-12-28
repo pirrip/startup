@@ -12,8 +12,6 @@ import lombok.Data;
 @Table(name = "FILE_INFO")
 public class FileInfo {
     @Id
-    @Column(name = "SEQ")
-    private Long seq;
     @Column(name = "FILENAME")
     private String filename;
     @Column(name = "ORIGINAL_FILENAME")

@@ -10,11 +10,8 @@ import lombok.Data;
 @Table(name = "FILE_META")
 public class FileMeta {
     @Id
-    @Column(name="SEQ")
-    private Long seq;
-    @Id
-    @Column(name="FILE_SEQ")
-    private Integer fileSeq;
+    @Column(name = "FILENAME")
+    private String filename;
     @Column(name="FORMAT")
     private String format;
     @Column(name="IDENTIFIER")

@@ -1,6 +1,6 @@
 package com.repetentia.web.rtadb.model;
 
-import java.io.File;
+import java.io.InputStream;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
@@ -12,11 +12,8 @@ import lombok.Data;
 @Table(name = "FILE_HOLDER")
 public class FileHolder {
     @Id
-    @Column(name="SEQ")
-    private Long seq;
-    @Id
-    @Column(name="FILE_SEQ")
-    private Integer fileSeq;
+    @Column(name = "FILENAME")
+    private String filename;
     @Column(name="FILE")
-    private File [] file;
+    private byte[] file;
 }

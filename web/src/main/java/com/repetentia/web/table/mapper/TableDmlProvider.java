@@ -57,7 +57,7 @@ public class TableDmlProvider<T> {
         
         return sql.toString();
     }
-    
+
     public String delete(T t) {
         Class<? extends Object> clazz = t.getClass();
         String tableName = BeanUtils.getTableName(clazz);
@@ -126,6 +126,6 @@ public class TableDmlProvider<T> {
             field.setAccessible(false);
             sql.SELECT(String.format("%s as %s", name, alias));
         }
-        return sql.toString();
+        return sql.toString().toLowerCase();
     }
 }

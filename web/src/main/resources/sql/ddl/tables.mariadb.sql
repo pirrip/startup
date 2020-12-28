@@ -21,56 +21,53 @@ create table `message_source` (
 
 
 drop table if exists `file_info`;
-create table `file_info` (
-  `seq` bigint unsigned not null auto_increment comment '연번',
-  `filename` char(32) not null comment '파일명',
-  `original_filename` text not null comment '원파일명',
-  `file_type` varchar(255) comment '파일형식',
-  `mime_type` varchar(255) comment '마임타입',
-  `tika_type` varchar(255) comment '티카타입',
-  `is_use` char(1) comment '사용여부',
-  `crdt` datetime comment '생성일',
-  primary key  (`seq`)
+CREATE TABLE `FILE_INFO` (
+  `FILENAME` CHAR(32) NOT NULL COMMENT '파일명',
+  `ORIGINAL_FILENAME` TEXT NOT NULL COMMENT '원파일명',
+  `FILE_TYPE` VARCHAR(255) COMMENT '파일형식',
+  `MIME_TYPE` VARCHAR(255) COMMENT '마임타입',
+  `TIKA_TYPE` VARCHAR(255) COMMENT '티카타입',
+  `IS_USE` CHAR(1) COMMENT '사용여부',
+  `CRDT` DATETIME COMMENT '생성일',
+  PRIMARY KEY  (`FILENAME`)
 ) engine=innodb default charset=utf8mb4 collate=utf8mb4_unicode_ci;
 
 drop table if exists `file_holder`;
-create table `file_holder` (
-  `seq` bigint unsigned not null comment '연번',
-  `file_seq` int unsigned not null unique comment '파일연번',
-  `file` longblob comment '파일',
-  primary key  (`seq`, `file_seq`)
+CREATE TABLE `FILE_HOLDER` (
+  `FILENAME` CHAR(32) NOT NULL COMMENT '파일명',
+  `FILE` LONGBLOB COMMENT '파일',
+  PRIMARY KEY  (`FILENAME`)
 ) engine=innodb default charset=utf8mb4 collate=utf8mb4_unicode_ci;
 
 drop table if exists `file_meta`;
-create table `file_meta` (
-  `seq` bigint unsigned not null unique comment '연번',
-  `file_seq` int unsigned not null unique comment '파일연번',
-  `format` text,
-  `identifier` text,
-  `contributor` text,
-  `coverage` text,
-  `creator` text,
-  `modifier` text,
-  `creator_tool` text,
-  `language` text,
-  `publisher` text,
-  `relation` text,
-  `rights` text,
-  `source` text,
-  `type` text,
-  `title`  text,
-  `description` text,
-  `keywords` text,
-  `created` text,
-  `modified` text,
-  `print_date` text,
-  `metadata_date` text,
-  `latitude` text,
-  `longitude` text,
-  `altitude` text,
-  `rating` text,
-  `comments` text,
-  primary key  (`seq`, `file_seq`)
+CREATE TABLE `FILE_META` (
+  `FILENAME` CHAR(32) NOT NULL COMMENT '파일명',
+  `FORMAT` TEXT,
+  `IDENTIFIER` TEXT,
+  `CONTRIBUTOR` TEXT,
+  `COVERAGE` TEXT,
+  `CREATOR` TEXT,
+  `MODIFIER` TEXT,
+  `CREATOR_TOOL` TEXT,
+  `LANGUAGE` TEXT,
+  `PUBLISHER` TEXT,
+  `RELATION` TEXT,
+  `RIGHTS` TEXT,
+  `SOURCE` TEXT,
+  `TYPE` TEXT,
+  `TITLE`  TEXT,
+  `DESCRIPTION` TEXT,
+  `KEYWORDS` TEXT,
+  `CREATED` TEXT,
+  `MODIFIED` TEXT,
+  `PRINT_DATE` TEXT,
+  `METADATA_DATE` TEXT,
+  `LATITUDE` TEXT,
+  `LONGITUDE` TEXT,
+  `ALTITUDE` TEXT,
+  `RATING` TEXT,
+  `COMMENTS` TEXT,
+  PRIMARY KEY  (`FILENAME`)
 ) engine=innodb default charset=utf8mb4 collate=utf8mb4_unicode_ci;
 
 
