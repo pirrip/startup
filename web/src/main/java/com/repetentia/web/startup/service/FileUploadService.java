@@ -130,8 +130,4 @@ public class FileUploadService {
 			}
 		}
 	}
-
-	public static void main(String[] args) {
-		
-	}
 }

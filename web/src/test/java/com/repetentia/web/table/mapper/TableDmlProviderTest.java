@@ -14,7 +14,7 @@ public class TableDmlProviderTest {
     @Test
     @DisplayName("TABLE INSERT TEST")
     public void insert() {
-        TableDmlProvider<FileInfo> sp = new TableDmlProvider<FileInfo>();
+        TableDmlProvider sp = new TableDmlProvider();
         FileInfo fileInfo = new FileInfo();
         String sql = sp.insert(fileInfo);
         log.info(".insert - SQL : \r\n{}", sql);
@@ -22,7 +22,7 @@ public class TableDmlProviderTest {
 
     @Test
     public void update() {
-        TableDmlProvider<FileMeta> sp = new TableDmlProvider<FileMeta>();
+        TableDmlProvider sp = new TableDmlProvider();
         FileMeta fileMeta = new FileMeta();
         String sql = sp.update(fileMeta);
         log.info(".update - SQL : \r\n{}", sql);
@@ -30,7 +30,7 @@ public class TableDmlProviderTest {
 
     @Test
     public void delete() {
-        TableDmlProvider<FileMeta> sp = new TableDmlProvider<FileMeta>();
+        TableDmlProvider sp = new TableDmlProvider();
         FileMeta fileMeta = new FileMeta();
         String sql = sp.delete(fileMeta);
         log.info(".delete - SQL : \r\n{}", sql);
@@ -38,7 +38,7 @@ public class TableDmlProviderTest {
 
     @Test
     public void find() {
-        TableDmlProvider<FileMeta> sp = new TableDmlProvider<FileMeta>();
+        TableDmlProvider sp = new TableDmlProvider();
         FileMeta fileMeta = new FileMeta();
         String sql = sp.find(fileMeta);
         log.info(".find - SQL : \r\n{}", sql);
@@ -46,7 +46,7 @@ public class TableDmlProviderTest {
     
     @Test
     public void findAll() {
-        TableDmlProvider<FileMeta> sp = new TableDmlProvider<FileMeta>();
+        TableDmlProvider sp = new TableDmlProvider();
         FileMeta fileMeta = new FileMeta();
         fileMeta.setKeywords("yours only");
         String sql = sp.findAll(fileMeta);

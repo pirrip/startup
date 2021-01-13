@@ -9,15 +9,15 @@ import org.apache.ibatis.annotations.SelectProvider;
 import org.apache.ibatis.annotations.UpdateProvider;
 
 @Mapper
-public interface TableMapper<T> {
+public interface TableMapper {
     @InsertProvider(type = TableDmlProvider.class, method = "insert")
-    public int insert(T t);
+    public <T> int insert(T t);
     @UpdateProvider(type = TableDmlProvider.class, method = "update")
-    public int update(T t);
+    public <T> int update(T t);
     @DeleteProvider(type = TableDmlProvider.class, method = "delete")
-    public int delete(T t);
+    public <T> int delete(T t);
     @SelectProvider(type = TableDmlProvider.class, method = "find")
-    public T find(T t);
+    public <T> T find(T t);
     @SelectProvider(type = TableDmlProvider.class, method = "findAll")
-    public List<T> findAll(T t);
+    public <T> List<T> findAll(T t);
 }

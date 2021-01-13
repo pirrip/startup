@@ -11,9 +11,9 @@ import org.springframework.util.ObjectUtils;
 
 import com.repetentia.component.utils.BeanUtils;
 
-public class TableDmlProvider<T> {
+public class TableDmlProvider {
 
-    public String insert(T t) {
+    public <T> String insert(T t) {
         Class<? extends Object> clazz = t.getClass();
         String tableName = BeanUtils.getTableName(clazz);
         
@@ -35,7 +35,7 @@ public class TableDmlProvider<T> {
         return query;
     }
 
-    public String update(T t) {
+    public <T> String update(T t) {
         Class<? extends Object> clazz = t.getClass();
         String tableName = BeanUtils.getTableName(clazz);
         
@@ -58,7 +58,7 @@ public class TableDmlProvider<T> {
         return sql.toString();
     }
 
-    public String delete(T t) {
+    public <T> String delete(T t) {
         Class<? extends Object> clazz = t.getClass();
         String tableName = BeanUtils.getTableName(clazz);
         
@@ -78,7 +78,7 @@ public class TableDmlProvider<T> {
         return sql.toString();
     }
     
-    public String find(T t) {
+    public <T> String find(T t) {
         Class<? extends Object> clazz = t.getClass();
         String tableName = BeanUtils.getTableName(clazz);
         
@@ -99,7 +99,7 @@ public class TableDmlProvider<T> {
         return sql.toString();
     }
 
-    public String findAll(T t) {
+    public <T> String findAll(T t) {
         Class<? extends Object> clazz = t.getClass();
         String tableName = BeanUtils.getTableName(clazz);
 
