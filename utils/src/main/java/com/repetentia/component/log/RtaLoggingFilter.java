@@ -2,13 +2,17 @@ package com.repetentia.component.log;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.web.filter.AbstractRequestLoggingFilter;
+import org.springframework.web.filter.CommonsRequestLoggingFilter;
 
-public class RtaLoggingFilter extends AbstractRequestLoggingFilter {
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+public class RtaLoggingFilter extends CommonsRequestLoggingFilter {
 
 	@Override
 	protected boolean shouldLog(HttpServletRequest request) {
-		return logger.isDebugEnabled();
+//		return logger.isDebugEnabled();
+		return true;
 	}
 
 	/**
@@ -16,7 +20,7 @@ public class RtaLoggingFilter extends AbstractRequestLoggingFilter {
 	 */
 	@Override
 	protected void beforeRequest(HttpServletRequest request, String message) {
-		logger.debug(message);
+		log.info("# before Request - {}", message);
 	}
 
 	/**
@@ -24,7 +28,7 @@ public class RtaLoggingFilter extends AbstractRequestLoggingFilter {
 	 */
 	@Override
 	protected void afterRequest(HttpServletRequest request, String message) {
-		logger.debug(message);
+		log.info("# after Request - {}", message);
 	}
 
 }
