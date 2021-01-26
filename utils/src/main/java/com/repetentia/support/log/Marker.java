@@ -12,10 +12,13 @@ public interface Marker {
     org.slf4j.Marker AFTER_PROP = MarkerFactory.getMarker("AFTER-PROP");
     org.slf4j.Marker DB_CONFIG = MarkerFactory.getMarker("DB-CONFIG");
     org.slf4j.Marker BOOT_CONFIG = MarkerFactory.getMarker("BOOT-CONFIG");
+    org.slf4j.Marker CONFIG = MarkerFactory.getMarker("CONFIG");
     org.slf4j.Marker VIEW = MarkerFactory.getMarker("VIEW");
     org.slf4j.Marker PAGE = MarkerFactory.getMarker("PAGE");
     org.slf4j.Marker REST_GET = MarkerFactory.getMarker("REST-GET");
     org.slf4j.Marker REST_POST= MarkerFactory.getMarker("REST-POST");
     org.slf4j.Marker POST = MarkerFactory.getMarker("POST");
     org.slf4j.Marker SQL = MarkerFactory.getMarker("SQL");
+    
+    org.slf4j.Marker TEST = MarkerFactory.getMarker("TEST");
 }

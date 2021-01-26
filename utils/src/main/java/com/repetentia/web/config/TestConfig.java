@@ -1,4 +1,4 @@
-package com.repetentia.web.startup.config;
+package com.repetentia.web.config;
 
 
 import java.util.Collection;
@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@org.springframework.context.annotation.Configuration
 public class TestConfig implements InitializingBean {
     @Autowired
     SqlSession SqlSession;

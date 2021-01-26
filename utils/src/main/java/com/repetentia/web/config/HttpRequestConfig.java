@@ -1,4 +1,4 @@
-package com.repetentia.web.startup.config;
+package com.repetentia.web.config;
 
 import java.security.Principal;
 import java.util.UUID;
@@ -13,7 +13,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.ObjectUtils;
 
-@Configuration
 public class HttpRequestConfig {
     @Bean
     public ServletRequestListener requestListener() {

@@ -25,7 +25,7 @@ import org.springframework.util.StringUtils;
 
 import com.repetentia.support.log.Marker;
 import com.repetentia.support.sql.SqlProviderUtils;
-import com.repetentia.web.startup.config.DataSourceConfig;
+import com.repetentia.web.config.DataSourceConfig;
 
 import lombok.extern.slf4j.Slf4j;
 

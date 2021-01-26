@@ -1,4 +1,4 @@
-package com.repetentia.web.startup.config;
+package com.repetentia.web.config;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -14,7 +14,6 @@ import org.apache.ibatis.session.AutoMappingBehavior;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.ibatis.type.BlobInputStreamTypeHandler;
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.TypeHandler;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -31,7 +30,6 @@ import com.repetentia.support.mybatis.BooleanCharTypeHandler;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@org.springframework.context.annotation.Configuration
 public class MyBatisConfig {
     private static final ResourcePatternResolver resourceResolver = new PathMatchingResourcePatternResolver();
     private Interceptor[] interceptors;

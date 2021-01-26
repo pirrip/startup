@@ -1,15 +1,13 @@
-package com.repetentia.web.startup.config;
+package com.repetentia.web.config;
 
 import javax.sql.DataSource;
 
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
-@Configuration
 public class DataSourceConfig {
     private Environment env;
     public DataSourceConfig(Environment env) {

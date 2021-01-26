@@ -12,6 +12,7 @@ spring:
     multipart:
       max-file-size: 1000MB
       max-request-size: 1000MB
+  profiles.default: prod
 server:
   servlet:
     context-path: /web

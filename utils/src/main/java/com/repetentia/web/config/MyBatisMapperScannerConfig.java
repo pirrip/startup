@@ -1,4 +1,4 @@
-package com.repetentia.web.startup.config;
+package com.repetentia.web.config;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.mybatis.spring.mapper.MapperScannerConfigurer;
@@ -11,7 +11,6 @@ import org.springframework.core.env.Environment;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@org.springframework.context.annotation.Configuration
 public class MyBatisMapperScannerConfig implements ApplicationContextAware {
 	private ApplicationContext applicationContext;
     

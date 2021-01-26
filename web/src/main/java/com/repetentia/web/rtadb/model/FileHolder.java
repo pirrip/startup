@@ -1,7 +1,5 @@
 package com.repetentia.web.rtadb.model;
 
-import java.io.InputStream;
-
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;

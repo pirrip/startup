@@ -73,7 +73,7 @@
 <!-- 		<logger name="org.springframework.security" level="debug" additivity="false"> -->
 <!-- 			<AppenderRef ref="console" /> -->
 <!-- 		</logger> -->
-		<logger name="com.repetentia.web" level="debug" additivity="false">
+		<logger name="com.repetentia" level="debug" additivity="false">
 			<AppenderRef ref="console" />
 			<AppenderRef ref="appLogFile" />
 		</logger>
