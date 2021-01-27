@@ -14,6 +14,11 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.repetentia</groupId>
+			<artifactId>startup-front</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.repetentia</groupId>
 			<artifactId>startup-utils</artifactId>
 			<version>0.0.1</version>
 		</dependency>

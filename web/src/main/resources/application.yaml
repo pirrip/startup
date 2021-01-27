@@ -1,4 +1,5 @@
 spring:
+# DATASOURCE
   datasource:
     driverClassName: org.mariadb.jdbc.Driver
     url: jdbc:mariadb://nas.repetentia.com:33306/rtadb
@@ -6,20 +7,30 @@ spring:
     password: R2P2T2NT1@
     hikari:
       maximum-pool-size: 1
+
+# VIEW - MUSTACHE      
   mustache: 
     suffix: .html
+    prefix: /WEB-INF/templates/
+    expose-spring-macro-helpers: true
+
+# FILE UPLOAD
   servlet:
     multipart:
       max-file-size: 1000MB
       max-request-size: 1000MB
-  profiles.default: prod
+
+# Servlet Context Path
 server:
   servlet:
     context-path: /web
 
+# MyBatis
 mybatis:
   type-aliases-package: com.repetentia.web.*.model
   mapper-locations: sql/mappers/*/*.xml
   mapper-scan-package: com.repetentia
+
+# Custom Properties Plugin
 active:
   site: rta

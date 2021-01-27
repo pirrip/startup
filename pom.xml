@@ -177,5 +177,6 @@
 		<module>web</module>
 		<module>utils</module>
 		<module>web-system</module>
+		<module>startup-front</module>
 	</modules>
 </project>

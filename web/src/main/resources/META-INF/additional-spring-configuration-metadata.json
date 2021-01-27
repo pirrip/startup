@@ -1,5 +1,12 @@
-{"properties": [{
-  "name": "active.site",
-  "type": "java.lang.String",
-  "description": "A description for 'active.site'"
-}]}
+{"properties": [
+  {
+    "name": "active.site",
+    "type": "java.lang.String",
+    "description": "A description for 'active.site'"
+  },
+  {
+    "name": "mybatis.mapper-scan-package",
+    "type": "java.lang.String",
+    "description": "A description for 'mybatis.mapper-scan-package'"
+  }
+]}
