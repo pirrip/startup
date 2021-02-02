@@ -45,6 +45,7 @@ public class TestController {
 	public void upload(List<MultipartFile> files) {
 	    log.info("# file : {}", files);
 	    fileUploadService.upload(files);
+	    log.info("# change : {}", files);
 	}
 	
 }
