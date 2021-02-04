@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
 
 import com.repetentia.support.log.Marker;
+import com.repetentia.web.config.LiquibaseConfig;
 import com.repetentia.web.config.LoggingFilterConfig;
 
 import lombok.extern.slf4j.Slf4j;
@@ -15,13 +16,13 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Configuration
 @Profile({"dev", "prod", "default"})
-@Import({ LoggingFilterConfig.class})
+@Import({ LoggingFilterConfig.class, LiquibaseConfig.class})
 public class StartupConfiguration {
 	
 	public StartupConfiguration(Environment env) {
 		String [] profiles = env.getActiveProfiles();
 		String [] defaultProfiles = env.getDefaultProfiles();
-		log.info(Marker.CONFIG, "# dev, prod - {}", Arrays.toString(profiles));
+		log.info(Marker.CONFIG, "#  active Profiles - {}", Arrays.toString(profiles));
 		log.info(Marker.CONFIG, "# default Profiles - {}", Arrays.toString(defaultProfiles));
 	}
 }

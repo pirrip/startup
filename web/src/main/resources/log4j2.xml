@@ -2,7 +2,7 @@
     <Properties>
         <Property name="LF_FILE">[%d] [%t] - [%-5level] [%marker] : %msg%n%throwable</Property>
         <Property name="LF_ANSI_CONSOLE_PROD">%d %style{[%X{id}]}{bright, white} %style{[%X{ip}]}{bright, blue} %blue{[%t]} %style{[%marker]}{bright,magenta} %highlight{[%-4level] %logger{36}%msg%n%throwable}{FATAL=white, ERROR=red, WARN=bright yellow , INFO=cyan, DEBUG=blue, TRACE=green}</Property>
-        <Property name="LF_ANSI_CONSOLE_DEV">%d{ABSOLUTE} %style{[%X{principal}]}{bright, white} %style{[%X{id}]}{bright, white} %style{[%X{uuid}]}{bright, white} %style{[%X{ip}]}{bright, blue} %blue{[%t]} %style{[%marker]}{bright,magenta} %highlight{[%-4level] %logger{36}%msg%n%throwable}{FATAL=white, ERROR=red, WARN=bright yellow , INFO=cyan, DEBUG=blue, TRACE=green}</Property>
+        <Property name="LF_ANSI_CONSOLE_DEV">%d{ABSOLUTE} %style{[%X{principal}]}{bright, white} %style{[%X{id}]}{bright, white} %style{[%X{uuid}]}{bright, white} %style{[%X{ip}]}{bright, blue} %blue{[%t]} %style{[%marker]}{bright,magenta} %highlight{[%-4level] %logger{36}}{FATAL=white, ERROR=red, WARN=bright yellow , INFO=cyan, DEBUG=blue, TRACE=green} - %msg%n%throwable</Property>
         <Property name="LF_ANSI_LOGBACK">%d [%X{id}] [%X{ip}] %cyan{[%t]} %style{[%marker]}{bright,magenta} %highlight{[%-4level] %c{-10} : %msg%n%throwable}{STYLE=Logback}</Property>
         <Property name="BASE_DIR">d:/rta/logs</Property>
     </Properties>
