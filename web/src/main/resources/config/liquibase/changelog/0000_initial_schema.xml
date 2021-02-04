@@ -3,7 +3,7 @@
     <changeSet context="prod" author="rta" id="00000001" labels="">
     	<comment>파일 DB 보관용</comment>
         <createTable tableName="file_holder">
-            <column name="filename" remarks="파일명" type="CHAR(32)">
+            <column name="filename" remarks="파일명" type="VARCHAR(255)">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
             <column defaultValueComputed="NULL" name="file" remarks="파일" type="LONGBLOB"/>
@@ -12,7 +12,7 @@
     <changeSet context="prod" author="rta" id="00000002">
     	<comment>파일 일반정보 </comment>
         <createTable tableName="file_info">
-            <column name="filename" remarks="파일명" type="CHAR(32)">
+            <column name="filename" remarks="파일명" type="VARCHAR(255)">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
             <column name="original_filename" remarks="원파일명" type="TEXT">
@@ -28,7 +28,7 @@
     <changeSet context="prod" author="rta" id="00000003">
     	<comment>파일상세정보</comment>
         <createTable tableName="file_meta">
-            <column name="filename" remarks="파일명" type="CHAR(32)">
+            <column name="filename" remarks="파일명" type="VARCHAR(255)">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
             <column name="format" type="TEXT"/>
@@ -81,7 +81,7 @@
             <column autoIncrement="true" name="pid" remarks="프로퍼티아이디" type="INT UNSIGNED">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
-            <column name="site" remarks="사이트" type="CHAR(32)">
+            <column name="site" remarks="사이트" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
             <column name="profile" remarks="스프링프로파일" type="TEXT">
@@ -90,7 +90,7 @@
             <column name="property_key" remarks="키" type="VARCHAR(255)"/>
             <column name="se" remarks="구분" type="VARCHAR(255)"/>
             <column name="property_name" remarks="키설명" type="VARCHAR(255)"/>
-            <column name="property_value" remarks="값" type="CHAR(1)"/>
+            <column name="property_value" remarks="값" type="VARCHAR(255)"/>
         </createTable>
     </changeSet>
 </databaseChangeLog>

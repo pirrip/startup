@@ -7,13 +7,10 @@ spring:
     password: R2P2T2NT1@
     hikari:
       maximum-pool-size: 1
-  #liquibase:
-    #change-log: classpath:/config/liquibase/master.xml
-# VIEW - MUSTACHE      
-  mustache: 
-    suffix: .html
-    prefix: /WEB-INF/templates/
-    expose-spring-macro-helpers: true
+  mvc:
+    view:
+      prefix: /WEB-INF/view/
+      suffix: .jsp
 
 # FILE UPLOAD
   servlet:

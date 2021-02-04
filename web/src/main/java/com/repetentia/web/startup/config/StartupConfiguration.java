@@ -2,6 +2,10 @@ package com.repetentia.web.startup.config;
 
 import java.util.Arrays;
 
+import org.apache.catalina.Context;
+import org.apache.tomcat.util.scan.StandardJarScanner;
+import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Profile;
@@ -24,5 +28,14 @@ public class StartupConfiguration {
 		String [] defaultProfiles = env.getDefaultProfiles();
 		log.info(Marker.CONFIG, "#  active Profiles - {}", Arrays.toString(profiles));
 		log.info(Marker.CONFIG, "# default Profiles - {}", Arrays.toString(defaultProfiles));
+	}
+	
+	@Bean
+	public TomcatServletWebServerFactory tomcatFactory() {
+	   return new TomcatServletWebServerFactory() {
+	      @Override
+	      protected void postProcessContext(Context context) {
+	         ((StandardJarScanner) context.getJarScanner()).setScanManifest(false);
+	   }};
 	}
 }
