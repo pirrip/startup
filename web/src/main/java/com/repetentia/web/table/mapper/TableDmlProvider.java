@@ -10,6 +10,7 @@ import org.apache.ibatis.jdbc.SQL;
 import org.springframework.util.ObjectUtils;
 
 import com.repetentia.component.utils.BeanUtils;
+import com.repetentia.web.rtadb.model.FileInfo;
 
 public class TableDmlProvider {
 

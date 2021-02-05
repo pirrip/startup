@@ -39,18 +39,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		DatabaseSecurityMetadataSource dsms = new DatabaseSecurityMetadataSource(); 
 		return dsms;
 	}
-	@Bean
+
 	public AuthenticationManager getAuthenticationManager() {
 		AuthenticationManager authenticationManager = new ProviderManager(Arrays.asList(authenticationProvider()));
 		return authenticationManager;
 	}
 
-	@Bean
 	public AuthenticationProvider authenticationProvider() {
 		RtaAuthenticationProvider authenticationProvider = new RtaAuthenticationProvider();
 		return authenticationProvider;
 	}
-	@Bean
+
 	public FilterSecurityInterceptor filterSecurityInterceptor() {
 	  FilterSecurityInterceptor filterSecurityInterceptor = new FilterSecurityInterceptor();
 	  filterSecurityInterceptor.setAuthenticationManager(getAuthenticationManager());
@@ -86,11 +85,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	public void configure(WebSecurity web) throws Exception {
 		web.ignoring().antMatchers("/css/**", "/js/**", "/img/**", "/lib/**");
+		web.ignoring().antMatchers("/**");
 	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-//		http.addFilterBefore(filterSecurityInterceptor(), FilterSecurityInterceptor.class);
+		http.addFilterBefore(filterSecurityInterceptor(), FilterSecurityInterceptor.class);
 		http.authorizeRequests().anyRequest().authenticated();
 		http.formLogin().loginPage("/system/login").loginProcessingUrl("/system/processlogin").usernameParameter("eno")
 				.passwordParameter("password").permitAll()

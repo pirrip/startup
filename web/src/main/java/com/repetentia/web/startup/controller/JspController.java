@@ -11,4 +11,10 @@ public class JspController {
 		mav.setViewName("sample");
 		return mav;
 	}
+	
+	@RequestMapping("/tiles")
+	public ModelAndView tiles(ModelAndView mav) {
+		mav.setViewName("tiles:tiles");
+		return mav;
+	}	
 }

@@ -7,11 +7,11 @@ import javax.persistence.Table;
 import lombok.Data;
 
 @Data
-@Table(name = "FILE_HOLDER")
+@Table(name = "file_holder")
 public class FileHolder {
     @Id
-    @Column(name = "FILENAME")
+    @Column(name = "filename")
     private String filename;
-    @Column(name="FILE")
+    @Column(name="file")
     private byte[] file;
 }

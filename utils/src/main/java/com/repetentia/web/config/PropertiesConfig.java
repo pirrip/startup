@@ -4,7 +4,7 @@ import org.springframework.context.annotation.Bean;
 
 import com.repetentia.component.property.DatabasePropertySourcePlaceHolderConfigurer;
 
-public class PropertiesPlaceHolderConfig {
+public class PropertiesConfig {
     @Bean
     public DatabasePropertySourcePlaceHolderConfigurer databasePropertySourcePlaceHolderConfigurer() {
         return new DatabasePropertySourcePlaceHolderConfigurer();

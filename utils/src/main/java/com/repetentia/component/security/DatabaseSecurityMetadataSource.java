@@ -17,7 +17,7 @@ public class DatabaseSecurityMetadataSource implements FilterInvocationSecurityM
 	    FilterInvocation fi = (FilterInvocation) object;
 	    String url = fi.getRequestUrl();
 	    
-	    log.info("# REQUESTED url - {}", url);
+	    log.info("# REQUESTED URL - {}", url);
 	    
 	    String[] stockArr = {"ROLE_ADMIN"};
 	    

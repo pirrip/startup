@@ -14,13 +14,26 @@ import org.springframework.core.env.Environment;
 import com.repetentia.support.log.Marker;
 import com.repetentia.web.config.LiquibaseConfig;
 import com.repetentia.web.config.LoggingFilterConfig;
+import com.repetentia.web.config.MessageSourceConfig;
+import com.repetentia.web.config.MyBatisConfig;
+import com.repetentia.web.config.MyBatisMapperScannerConfig;
+import com.repetentia.web.config.PropertiesConfig;
+import com.repetentia.web.config.TilesConfig;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Configuration
 @Profile({"dev", "prod", "default"})
-@Import({ LoggingFilterConfig.class, LiquibaseConfig.class})
+@Import({ 
+	LoggingFilterConfig.class,
+	LiquibaseConfig.class,
+	MyBatisConfig.class,
+	MyBatisMapperScannerConfig.class,
+	MessageSourceConfig.class,
+	PropertiesConfig.class,
+	TilesConfig.class,
+})
 public class StartupConfiguration {
 	
 	public StartupConfiguration(Environment env) {

@@ -9,7 +9,7 @@ spring:
       maximum-pool-size: 1
   mvc:
     view:
-      prefix: /WEB-INF/view/
+      prefix: /WEB-INF/views/
       suffix: .jsp
 
 # FILE UPLOAD
@@ -29,6 +29,9 @@ mybatis:
   mapper-locations: sql/mappers/*/*.xml
   mapper-scan-package: com.repetentia
 
+# TILES
+tiles:
+  settings: classpath:config/tiles/tiles.xml
 # Custom Properties Plugin
 active:
   site: rta

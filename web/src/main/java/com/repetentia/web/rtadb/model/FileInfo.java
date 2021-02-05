@@ -9,21 +9,21 @@ import javax.persistence.Table;
 import lombok.Data;
 
 @Data
-@Table(name = "FILE_INFO")
+@Table(name = "file_info")
 public class FileInfo {
     @Id
-    @Column(name = "FILENAME")
+    @Column(name = "filename")
     private String filename;
-    @Column(name = "ORIGINAL_FILENAME")
+    @Column(name = "original_filename")
     private String originalFilename;
-    @Column(name = "FILE_TYPE")
+    @Column(name = "file_type")
     private String fileType;
-    @Column(name = "MIME_TYPE")
+    @Column(name = "mime_type")
     private String mimeType;
-    @Column(name = "TIKA_TYPE")
+    @Column(name = "tika_type")
     private String tikaType;
-    @Column(name = "IS_USE")
+    @Column(name = "is_use")
     private boolean use;
-    @Column(name = "CRDT")
+    @Column(name = "crdt")
     private LocalDateTime crdt;
 }

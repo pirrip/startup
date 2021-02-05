@@ -7,59 +7,59 @@ import javax.persistence.Table;
 import lombok.Data;
 
 @Data
-@Table(name = "FILE_META")
+@Table(name = "file_meta")
 public class FileMeta {
     @Id
-    @Column(name = "FILENAME")
+    @Column(name = "filename")
     private String filename;
-    @Column(name="FORMAT")
+    @Column(name="format")
     private String format;
-    @Column(name="IDENTIFIER")
+    @Column(name="identifier")
     private String identifier;
-    @Column(name="CONTRIBUTOR")
+    @Column(name="contributor")
     private String contributor;
-    @Column(name="COVERAGE")
+    @Column(name="coverage")
     private String coverage;
-    @Column(name="CREATOR")
+    @Column(name="creator")
     private String creator;
-    @Column(name="MODIFIER")
+    @Column(name="modifier")
     private String modifier;
-    @Column(name="CREATOR_TOOL")
+    @Column(name="creator_tool")
     private String creatorTool;
-    @Column(name="LANGUAGE")
+    @Column(name="language")
     private String language;
-    @Column(name="PUBLISHER")
+    @Column(name="publisher")
     private String publisher;
-    @Column(name="RELATION")
+    @Column(name="relation")
     private String relation;
-    @Column(name="RIGHTS")
+    @Column(name="rights")
     private String rights;
-    @Column(name="SOURCE")
+    @Column(name="source")
     private String source;
-    @Column(name="TYPE")
+    @Column(name="type")
     private String type;
     @Column(name="TITLE")
     private String title;
-    @Column(name="DESCRIPTION")
+    @Column(name="description")
     private String description;
-    @Column(name="KEYWORDS")
+    @Column(name="keywords")
     private String keywords;
-    @Column(name="CREATED")
+    @Column(name="created")
     private String created;
-    @Column(name="MODIFIED")
+    @Column(name="modified")
     private String modified;
-    @Column(name="PRINT_DATE")
+    @Column(name="print_date")
     private String printDate;
-    @Column(name="METADATA_DATE")
+    @Column(name="metadata_date")
     private String metadataDate;
-    @Column(name="LATITUDE")
+    @Column(name="latitude")
     private String latitude;
-    @Column(name="LONGITUDE")
+    @Column(name="longitude")
     private String longitude;
-    @Column(name="ALTITUDE")
+    @Column(name="altitude")
     private String altitude;
-    @Column(name="RATING")
+    @Column(name="rating")
     private String rating;
-    @Column(name="COMMENTS")
+    @Column(name="comments")
     private String comments;
 }

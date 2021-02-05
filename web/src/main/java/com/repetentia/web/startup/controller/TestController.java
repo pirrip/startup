@@ -58,7 +58,7 @@ public class TestController {
 	    log.info("# test session id  - {}", id);
 	    log.info("# log  - {}, {}", log.getClass(), log.getName());
 	    
-	    mav.setViewName("sample/test");
+	    mav.setViewName("test");
 		return mav;
 	}
 
