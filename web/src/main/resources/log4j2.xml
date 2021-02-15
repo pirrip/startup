@@ -70,9 +70,9 @@
 <!-- 			<AppenderRef ref="console" /> -->
 <!-- 			<AppenderRef ref="appLogFile" /> -->
 <!-- 		</logger> -->
-		<logger name="org.springframework.security" level="trace" additivity="false">
-			<AppenderRef ref="console" />
-		</logger>
+<!-- 		<logger name="org.springframework.security" level="trace" additivity="false"> -->
+<!-- 			<AppenderRef ref="console" /> -->
+<!-- 		</logger> -->
 		<logger name="com.repetentia" level="debug" additivity="false">
 			<AppenderRef ref="console" />
 			<AppenderRef ref="appLogFile" />
