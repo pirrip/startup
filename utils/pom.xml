@@ -29,6 +29,11 @@
 	</dependencyManagement>
 	<dependencies>
 		<dependency>
+		    <groupId>com.fasterxml.jackson.core</groupId>
+		    <artifactId>jackson-core</artifactId>
+		    <version>2.11.3</version>
+		</dependency>
+		<dependency>
 			<groupId>org.apache.tiles</groupId>
 			<artifactId>tiles-servlet</artifactId>
 			<version>${org.apache.tiles-version}</version>
@@ -103,6 +108,16 @@
 			<version>5.4.1</version>
 		</dependency>
 		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-oauth2-resource-server</artifactId>
+			<version>5.4.1</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.springframework.security</groupId>
+		    <artifactId>spring-security-oauth2-jose</artifactId>
+		    <version>5.4.1</version>
+		</dependency>
+		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<version>1.18.16</version>
@@ -113,11 +128,11 @@
 			<artifactId>slf4j-api</artifactId>
 			<version>1.7.30</version>
 		</dependency>
-		<dependency>
-			<groupId>io.jsonwebtoken</groupId>
-			<artifactId>jjwt</artifactId>
-			<version>0.9.1</version>
-		</dependency>
+		<!-- <dependency> -->
+		<!-- <groupId>io.jsonwebtoken</groupId> -->
+		<!-- <artifactId>jjwt</artifactId> -->
+		<!-- <version>0.9.1</version> -->
+		<!-- </dependency> -->
 		<!-- 테스트 -->
 		<dependency>
 			<groupId>org.springframework</groupId>
