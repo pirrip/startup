@@ -31,6 +31,17 @@ mybatis:
   mapper-locations: sql/mappers/*/*.xml
   mapper-scan-package: com.repetentia
 
+# LIQUIBASE
+liquibase:
+  table:
+    change: log_lb_change
+    lock: log_lb_change_lock
+  path:
+    master: classpath:config/liquibase/master.xml
+    changelog: d:/change-logs.xml
+#  catalog:
+  schema: rtadb
+  
 # TILES
 tiles:
   settings: classpath:config/tiles/tiles.xml
