@@ -19,7 +19,7 @@ public class DatabaseSecurityMetadataSource implements FilterInvocationSecurityM
 	    
 	    log.info("# REQUESTED URL - {}", url);
 	    
-	    String[] stockArr = {"ROLE_ADMIN"};
+	    String[] stockArr = {"ROLE_USER", "ROLE_ANONYMOUS"};
 	    
 		return  SecurityConfig.createList(stockArr);
 	}

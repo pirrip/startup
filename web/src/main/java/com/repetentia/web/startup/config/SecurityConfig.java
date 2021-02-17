@@ -97,7 +97,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-//		http.addFilterBefore(filterSecurityInterceptor(), FilterSecurityInterceptor.class);
+		http.addFilterBefore(filterSecurityInterceptor(), FilterSecurityInterceptor.class);
 //		http.authorizeRequests().anyRequest().authenticated();
 //		http.authorizeRequests().antMatchers("/**").hasRole("USER").anyRequest().authenticated();
 //		http.formLogin().loginPage("/system/login").permitAll()
