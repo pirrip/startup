@@ -12,6 +12,10 @@
   <link rel="stylesheet" href="<c:url value='/static/plugins/icheck-bootstrap/icheck-bootstrap.min.css'/>">
 </head>
 <body class="hold-transition login-page">
-
+	<form action="<c:url value="/system/processlogin"/>" method="post">
+		<input type="text" name="username">
+		<input type="password" name="password">
+		<button type="submit">login</button>
+	</form>
 </body>
 </html>
