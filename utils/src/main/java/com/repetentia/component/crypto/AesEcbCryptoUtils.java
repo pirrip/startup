@@ -27,7 +27,7 @@ public class AesEcbCryptoUtils {
 
         return asHex(encrypted);
     }
-    
+
     public static String decrypt(String cipherText, String privateKey) throws Exception {
         if(!StringUtils.hasText(cipherText)) {
             return cipherText;

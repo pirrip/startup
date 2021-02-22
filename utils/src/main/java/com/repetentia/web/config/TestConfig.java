@@ -11,6 +11,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.repetentia.component.utils.UUIDUtils;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

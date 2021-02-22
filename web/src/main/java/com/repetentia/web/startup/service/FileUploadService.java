@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.repetentia.component.utils.FileUtils;
+import com.repetentia.component.utils.UUIDUtils;
 import com.repetentia.web.rtadb.model.FileHolder;
 import com.repetentia.web.rtadb.model.FileInfo;
 import com.repetentia.web.rtadb.model.FileMeta;
@@ -97,7 +98,7 @@ public class FileUploadService {
 
 	public void upload(List<MultipartFile> files) {
 		for (MultipartFile multipartFile : files) {
-			String filename = FileUtils.generate();
+			String filename = UUIDUtils.generate();
 			FileInfo fileInfo = new FileInfo();
 			String contentType = multipartFile.getContentType();
 			String originalFilename = multipartFile.getOriginalFilename();
