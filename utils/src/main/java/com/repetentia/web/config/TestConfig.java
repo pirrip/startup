@@ -11,7 +11,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.repetentia.component.utils.UUIDUtils;
+import com.repetentia.utils.UUIDUtils;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -19,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 public class TestConfig implements InitializingBean {
     @Autowired
     SqlSession SqlSession;
-    
+
     @Override
     public void afterPropertiesSet() throws Exception {
         Configuration configuration = SqlSession.getConfiguration();
@@ -32,6 +32,5 @@ public class TestConfig implements InitializingBean {
             String sql = boundSql.getSql();
             log.warn("SQL - {}", sql);
         }
-        
     }
 }

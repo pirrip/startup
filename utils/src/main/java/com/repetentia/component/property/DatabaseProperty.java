@@ -7,7 +7,7 @@ import javax.persistence.Table;
 import lombok.Data;
 
 @Data
-@Table(name = "property_source")
+@Table(name = "st_property_source")
 public class DatabaseProperty {
     @Id
     @Column(name = "pid")

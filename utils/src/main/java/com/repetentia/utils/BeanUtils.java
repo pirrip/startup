@@ -1,4 +1,4 @@
-package com.repetentia.component.utils;
+package com.repetentia.utils;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;

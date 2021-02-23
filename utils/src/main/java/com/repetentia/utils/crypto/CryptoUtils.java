@@ -1,4 +1,4 @@
-package com.repetentia.component.crypto;
+package com.repetentia.utils.crypto;
 
 import java.util.Arrays;
 import java.util.Base64;

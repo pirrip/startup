@@ -1,4 +1,4 @@
-package com.repetentia.component.utils;
+package com.repetentia.utils;
 
 import java.util.Random;
 import java.util.UUID;
