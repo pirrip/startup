@@ -29,7 +29,7 @@ server:
 mybatis:
   type-aliases-package: com.repetentia.web.*.model
   mapper-locations: sql/mappers/*/*.xml
-  mapper-scan-package: com.repetentia
+  mapper-scan-package: com.repetentia.web
 
 # LIQUIBASE
 liquibase:
@@ -41,7 +41,7 @@ liquibase:
     changelog: d:/change-logs.xml
 #  catalog:
   schema: rtadb
-  
+
 # TILES
 tiles:
   settings: classpath:config/tiles/tiles.xml

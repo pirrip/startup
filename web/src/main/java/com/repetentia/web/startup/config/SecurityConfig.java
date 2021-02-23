@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.AccessDecisionVoter;
@@ -14,7 +16,6 @@ import org.springframework.security.access.vote.RoleHierarchyVoter;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.ProviderManager;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -26,78 +27,82 @@ import org.springframework.security.web.access.intercept.FilterSecurityIntercept
 import com.repetentia.component.security.DatabaseSecurityMetadataSource;
 import com.repetentia.component.security.JwtAuthenticationProvider;
 import com.repetentia.component.security.RtaAuthenticationProvider;
+import com.repetentia.component.user.RtaUserDetailsService;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-	
-	public DatabaseSecurityMetadataSource databaseSecurityMetadataSource() {
-		DatabaseSecurityMetadataSource dsms = new DatabaseSecurityMetadataSource(); 
-		return dsms;
-	}
+    @Autowired
+    private SqlSession sqlSession;
 
-//	@Bean
-//	public AuthenticationManager getAuthenticationManager() {
-//		AuthenticationManager authenticationManager = new ProviderManager(Arrays.asList(authenticationProvider(), jwtAuthenticationProvider()));
-//		return authenticationManager;
-//	}
+    @Bean
+    public DatabaseSecurityMetadataSource databaseSecurityMetadataSource() {
+        DatabaseSecurityMetadataSource dsms = new DatabaseSecurityMetadataSource(sqlSession);
+        return dsms;
+    }
 
-	public AuthenticationProvider authenticationProvider() {
-		RtaAuthenticationProvider authenticationProvider = new RtaAuthenticationProvider();
-		return authenticationProvider;
-	}
+    @Bean
+    public AuthenticationManager getAuthenticationManager() {
+        AuthenticationManager authenticationManager = new ProviderManager(Arrays.asList(authenticationProvider(), jwtAuthenticationProvider()));
+        return authenticationManager;
+    }
 
-	public JwtAuthenticationProvider jwtAuthenticationProvider() {
-		JwtAuthenticationProvider authenticationProvider = new JwtAuthenticationProvider();
-		return authenticationProvider;
-	}
-	@Bean
-	public RtaUserDetailsService userDetailsService() {
-		RtaUserDetailsService userDetailsService = new RtaUserDetailsService();
-		return userDetailsService; 
-	}
-	public FilterSecurityInterceptor filterSecurityInterceptor() {
-	  FilterSecurityInterceptor filterSecurityInterceptor = new FilterSecurityInterceptor();
-	  filterSecurityInterceptor.setSecurityMetadataSource(databaseSecurityMetadataSource());
-	  filterSecurityInterceptor.setAccessDecisionManager(affirmativeBased());
-	  return filterSecurityInterceptor;
-	}
+    public AuthenticationProvider authenticationProvider() {
+        RtaAuthenticationProvider authenticationProvider = new RtaAuthenticationProvider();
+        return authenticationProvider;
+    }
 
-	public AffirmativeBased affirmativeBased() {
-	  List<AccessDecisionVoter<? extends Object>> accessDecisionVoters = new ArrayList<>();
-	  accessDecisionVoters.add(roleVoter());
-	  AffirmativeBased affirmativeBased = new AffirmativeBased(accessDecisionVoters);
-	  return affirmativeBased;
-	}
+    public JwtAuthenticationProvider jwtAuthenticationProvider() {
+        JwtAuthenticationProvider authenticationProvider = new JwtAuthenticationProvider();
+        return authenticationProvider;
+    }
+    @Bean
+    public RtaUserDetailsService userDetailsService() {
+        RtaUserDetailsService userDetailsService = new RtaUserDetailsService();
+        return userDetailsService;
+    }
+    public FilterSecurityInterceptor filterSecurityInterceptor() {
+      FilterSecurityInterceptor filterSecurityInterceptor = new FilterSecurityInterceptor();
+      filterSecurityInterceptor.setSecurityMetadataSource(databaseSecurityMetadataSource());
+      filterSecurityInterceptor.setAccessDecisionManager(affirmativeBased());
+      return filterSecurityInterceptor;
+    }
 
-	public RoleHierarchyVoter roleVoter() {
-	  RoleHierarchyVoter roleHierarchyVoter = new RoleHierarchyVoter(roleHierarchy());
-	  roleHierarchyVoter.setRolePrefix("ROLE_");
-	  return roleHierarchyVoter;
-	}
+    public AffirmativeBased affirmativeBased() {
+      List<AccessDecisionVoter<? extends Object>> accessDecisionVoters = new ArrayList<>();
+      accessDecisionVoters.add(roleVoter());
+      AffirmativeBased affirmativeBased = new AffirmativeBased(accessDecisionVoters);
+      return affirmativeBased;
+    }
 
-	public RoleHierarchy roleHierarchy() {
-	  RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
-	  roleHierarchy.setHierarchy("ROLE_ADMIN > ROLE_USER");
-	  return roleHierarchy;
-	}
-	
-	@Bean
-	public PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
+    public RoleHierarchyVoter roleVoter() {
+      RoleHierarchyVoter roleHierarchyVoter = new RoleHierarchyVoter(roleHierarchy());
+      roleHierarchyVoter.setRolePrefix("ROLE_");
+      return roleHierarchyVoter;
+    }
 
-	@Override
-	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/static/**");
+    public RoleHierarchy roleHierarchy() {
+      RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
+      roleHierarchy.setHierarchy("ROLE_ADMIN > ROLE_USER");
+      return roleHierarchy;
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/static/**");
 //		web.ignoring().antMatchers("/system/**");
 //		web.ignoring().antMatchers("/error");
 //		web.ignoring().antMatchers("/**");
-	}
+    }
 
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		http.addFilterBefore(filterSecurityInterceptor(), FilterSecurityInterceptor.class);
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.addFilterBefore(filterSecurityInterceptor(), FilterSecurityInterceptor.class);
 //		http.authorizeRequests().anyRequest().authenticated();
 //		http.authorizeRequests().antMatchers("/**").hasRole("USER").anyRequest().authenticated();
 //		http.formLogin().loginPage("/system/login").permitAll()
@@ -110,14 +115,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //		http.logout().logoutUrl("/system/logout").logoutSuccessUrl("/system/login").invalidateHttpSession(true)
 //			.deleteCookies("JSESSIONID").permitAll()
 //			.logoutSuccessHandler(logoutHandler())
-			;
-		http.authorizeRequests().antMatchers("/system/**").permitAll()
-			.anyRequest().authenticated()
-		.and()
-			.formLogin().loginPage("/system/login")
-			.loginProcessingUrl("/system/processlogin")
-		.and()
-			.csrf().disable();
-	}
+            ;
+        http.authorizeRequests().anyRequest().authenticated()
+        .and()
+            .formLogin().loginPage("/system/login")
+            .loginProcessingUrl("/system/processlogin")
+        .and()
+            .csrf().disable();
+    }
 
 }

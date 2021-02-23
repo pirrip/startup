@@ -28,35 +28,34 @@ public class TestController {
     LiquiBaseChangeLogGenerator liquiBaseChangeLogGenerator;
 
     @GetMapping("/test")
-	public ModelAndView test(ModelAndView mav, HttpServletRequest request) {
-	    String id = request.getSession().getId();
-	    log.info("# test session id  - {}", id);
-	    log.info("# log  - {}, {}", log.getClass(), log.getName());
-	    
-	    mav.setViewName("test");
-		return mav;
-	}
+    public ModelAndView test(ModelAndView mav, HttpServletRequest request) {
+        String id = request.getSession().getId();
+        log.info("# test session id  - {}", id);
+        log.info("# log  - {}, {}", log.getClass(), log.getName());
+
+        mav.setViewName("test");
+        return mav;
+    }
 
 //    @RequestMapping(value="/upload")
 //	public void upload() {
 //	    log.info("# upload");
 //	}
     @RequestMapping("/upload")
-	public void upload(List<MultipartFile> files) {
-	    log.info("# file : {}", files);
-	    fileUploadService.upload(files);
-	    log.info("# change : {}", files);
-	}
+    public void upload(List<MultipartFile> files) {
+        log.info("# file : {}", files);
+        fileUploadService.upload(files);
+        log.info("# change : {}", files);
+    }
 
-
-	@GetMapping("/lb")
-	public String lb() throws Exception {
-    	if (liquiBaseChangeLogGenerator.generateChangeLog()) {
-    		return "OK";	
-    	} else {
-    		return "NOT OK";
-    	}
-	}
+    @GetMapping("/lb")
+    public String lb() throws Exception {
+        if (liquiBaseChangeLogGenerator.generateChangeLog()) {
+            return "OK";
+        } else {
+            return "NOT OK";
+        }
+    }
 
 }
 

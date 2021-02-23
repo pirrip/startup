@@ -3,6 +3,7 @@ package com.repetentia.web.table.mapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import com.repetentia.component.table.TableDmlProvider;
 import com.repetentia.web.rtadb.model.FileInfo;
 import com.repetentia.web.rtadb.model.FileMeta;
 

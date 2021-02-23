@@ -12,6 +12,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.repetentia.component.table.CommandMapper;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -32,6 +34,9 @@ public class TestService {
             String sql = boundSql.getSql();
             log.warn("SQL id : {} - {}", id, sql);
         }
+
+//        UserDetails userDetails = new  UserDetails();
+//        int i = tableMapper.insert(userDetails);
 //        DatabaseProperty dp =  new DatabaseProperty();
 //        dp.setProfile("test");
 //        dp.setProfile("default");

@@ -17,12 +17,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.repetentia.component.utils.FileUtils;
-import com.repetentia.component.utils.UUIDUtils;
+import com.repetentia.component.table.CommandMapper;
+import com.repetentia.utils.FileUtils;
+import com.repetentia.utils.UUIDUtils;
 import com.repetentia.web.rtadb.model.FileHolder;
 import com.repetentia.web.rtadb.model.FileInfo;
 import com.repetentia.web.rtadb.model.FileMeta;
-import com.repetentia.web.table.mapper.TableMapper;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -122,9 +122,9 @@ public class FileUploadService {
 				FileHolder fileHolder = new FileHolder();
 				fileHolder.setFile(multipartFile.getBytes());
 				fileHolder.setFilename(filename);
-				sqlSession.getMapper(TableMapper.class).insert(fileInfo);
-				sqlSession.getMapper(TableMapper.class).insert(fileMeta);
-				sqlSession.getMapper(TableMapper.class).insert(fileHolder);
+				sqlSession.getMapper(CommandMapper.class).insert(fileInfo);
+				sqlSession.getMapper(CommandMapper.class).insert(fileMeta);
+				sqlSession.getMapper(CommandMapper.class).insert(fileHolder);
 				log.info("# META - {}", fileMeta);
 			} catch (IOException e) {
 				e.printStackTrace();
