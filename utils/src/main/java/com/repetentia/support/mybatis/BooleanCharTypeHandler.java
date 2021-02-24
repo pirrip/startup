@@ -17,7 +17,7 @@ public class BooleanCharTypeHandler extends BaseTypeHandler<Boolean> {
     @Override
     public void setNonNullParameter(PreparedStatement ps, int i, Boolean parameter, JdbcType jdbcType) throws SQLException {
         parameter = (parameter == null) ? false : parameter;
-        ps.setString(i, parameter ? "1" : "0");
+        ps.setString(i, parameter ? "T" : "F");
     }
 
     @Override
@@ -36,6 +36,6 @@ public class BooleanCharTypeHandler extends BaseTypeHandler<Boolean> {
     }
 
     private Boolean getBoolean(String s) {
-        return "1".equals(s);
+        return "T".equals(s);
     }
 }

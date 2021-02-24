@@ -27,6 +27,7 @@ import org.springframework.security.web.access.intercept.FilterSecurityIntercept
 import com.repetentia.component.security.DatabaseSecurityMetadataSource;
 import com.repetentia.component.security.JwtAuthenticationProvider;
 import com.repetentia.component.security.RtaAuthenticationProvider;
+import com.repetentia.component.security.UrlSecuritySource;
 import com.repetentia.component.user.RtaUserDetailsService;
 
 @Configuration
@@ -37,7 +38,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public DatabaseSecurityMetadataSource databaseSecurityMetadataSource() {
-        DatabaseSecurityMetadataSource dsms = new DatabaseSecurityMetadataSource(sqlSession);
+        UrlSecuritySource urlSecuritySource = new UrlSecuritySource(sqlSession);
+        DatabaseSecurityMetadataSource dsms = new DatabaseSecurityMetadataSource(urlSecuritySource);
         return dsms;
     }
 

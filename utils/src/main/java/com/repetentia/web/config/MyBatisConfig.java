@@ -14,6 +14,7 @@ import org.apache.ibatis.session.AutoMappingBehavior;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.type.EnumTypeHandler;
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.TypeHandler;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -23,7 +24,9 @@ import org.springframework.core.env.Environment;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
+import org.springframework.http.HttpMethod;
 
+import com.repetentia.component.security.UrlSe;
 import com.repetentia.support.mybatis.BlobFileInputStreamTypeHandler;
 import com.repetentia.support.mybatis.BooleanCharTypeHandler;
 
@@ -86,7 +89,16 @@ public class MyBatisConfig {
 
     @SuppressWarnings("rawtypes")
     public TypeHandler[] registerTypeHandlers() {
-        TypeHandler[] typeHandlers = { new BooleanCharTypeHandler(), new BlobFileInputStreamTypeHandler() };
+        EnumTypeHandler<HttpMethod> httpMethodHandler = new EnumTypeHandler<HttpMethod>(HttpMethod.class);
+        EnumTypeHandler<UrlSe> urlSecuritySeHandler = new EnumTypeHandler<UrlSe>(UrlSe.class);
+
+        TypeHandler[] typeHandlers = {
+            new BooleanCharTypeHandler(),
+            new BlobFileInputStreamTypeHandler(),
+            httpMethodHandler,
+            urlSecuritySeHandler,
+        };
+
         return typeHandlers;
     };
 

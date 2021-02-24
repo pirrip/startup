@@ -6,7 +6,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
@@ -18,15 +17,12 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class DatabaseSecurityMetadataSource implements FilterInvocationSecurityMetadataSource, InitializingBean {
-    private SqlSession sqlSession;
-    public DatabaseSecurityMetadataSource(SqlSession sqlSession) {
-        this.sqlSession = sqlSession;
-    }
+    private UrlSecuritySource urlSecuritySource;
+    private Map<RequestMatcher, List<ConfigAttribute>> requestMap;
 
-    Map<RequestMatcher, List<ConfigAttribute>> requestMap;
+    public DatabaseSecurityMetadataSource(UrlSecuritySource urlSecuritySource) {
+        this.urlSecuritySource = urlSecuritySource;
 
-    public void setRequestMap(Map<RequestMatcher, List<ConfigAttribute>> requestMap) {
-        this.requestMap = requestMap;
     }
 
     @Override
@@ -66,8 +62,7 @@ public class DatabaseSecurityMetadataSource implements FilterInvocationSecurityM
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        log.info("###############################");
-        log.info("# aps - {}", sqlSession);
-        log.info("###############################");
+        this.requestMap = this.urlSecuritySource.loadUrlSecuritySource();
     }
+
 }
