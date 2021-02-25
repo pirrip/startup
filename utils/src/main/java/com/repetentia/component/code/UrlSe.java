@@ -4,9 +4,6 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum UrlSe implements RtaEnumType {
     P("P", "PAGE", "페이지", ""), M("M", "MENU", "구분메뉴", ""), S("S", "SERVICE", "서비스", ""),;

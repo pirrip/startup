@@ -7,12 +7,10 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.security.access.ConfigAttribute;
+import org.springframework.security.access.SecurityConfig;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.MapperFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
 import com.repetentia.component.code.UrlSe;
 
 public class UrlSecuritySource {
@@ -25,30 +23,16 @@ public class UrlSecuritySource {
 
     public Map<RequestMatcher, List<ConfigAttribute>> loadUrlSecuritySource() {
         Map<RequestMatcher, List<ConfigAttribute>> requestMap = new HashMap<RequestMatcher, List<ConfigAttribute>>();
-        List<UrlSecurity> list = sqlSession.getMapper(UrlSecurityMapper.class).findAll();
-        System.out.println(list);
-        ObjectMapper om = new ObjectMapper();
-        ObjectWriter ow = om.writer().withDefaultPrettyPrinter();
-        om.enable(MapperFeature.USE_ANNOTATIONS);
+        List<UrlSecurity> urlSecurities = sqlSession.getMapper(UrlSecurityMapper.class).findAll();
 
-
-        try {
-            String json = ow.writeValueAsString(list);
-            System.out.println(json);
-
-            String menu = ow.writeValueAsString(UrlSe.M);
-            System.out.println(menu);
-        } catch (JsonProcessingException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
-
-        for (UrlSecurity urlSecurity:list) {
+        for (UrlSecurity urlSecurity:urlSecurities) {
             if (UrlSe.P.equals(urlSecurity.getMenuSe()) || UrlSe.S.equals(urlSecurity.getMenuSe())) {
-//                RequestMatcher requestMatcher = new AntPathRequestMatcher(null, null, false);
-
-
+                String pattern = String.format("%s%s", urlSecurity.getUrl(), "**");
+                String httpMethod = urlSecurity.getMethod().code();
+                RequestMatcher requestMatcher = new AntPathRequestMatcher(pattern, httpMethod, false);
+                String role = String.format("ROLE_%s", urlSecurity.getUsergroup()) ;
+                List<ConfigAttribute> list = SecurityConfig.createList(role);
+                requestMap.put(requestMatcher, list);
             }
         }
         return requestMap;

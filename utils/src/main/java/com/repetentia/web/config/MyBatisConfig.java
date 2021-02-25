@@ -28,7 +28,7 @@ import org.springframework.core.io.support.ResourcePatternResolver;
 import com.repetentia.component.code.HttpMethod;
 import com.repetentia.component.code.UrlSe;
 import com.repetentia.support.mybatis.BlobFileInputStreamTypeHandler;
-import com.repetentia.support.mybatis.BooleanCharTypeHandler;
+import com.repetentia.support.mybatis.BooleanTFTypeHandler;
 import com.repetentia.support.mybatis.RtaEnumTypeHandler;
 
 import lombok.extern.slf4j.Slf4j;
@@ -94,7 +94,7 @@ public class MyBatisConfig {
         RtaEnumTypeHandler<UrlSe> urlSecuritySeHandler = new RtaEnumTypeHandler<UrlSe>(UrlSe.class);
 
         TypeHandler[] typeHandlers = {
-            new BooleanCharTypeHandler(),
+            new BooleanTFTypeHandler(),
             new BlobFileInputStreamTypeHandler(),
             httpMethodHandler,
             urlSecuritySeHandler,

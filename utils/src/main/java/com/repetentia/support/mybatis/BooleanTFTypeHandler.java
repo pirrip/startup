@@ -12,7 +12,7 @@ import org.apache.ibatis.type.MappedTypes;
 
 @MappedTypes(Boolean.class)
 @MappedJdbcTypes(JdbcType.CHAR)
-public class BooleanCharTypeHandler extends BaseTypeHandler<Boolean> {
+public class BooleanTFTypeHandler extends BaseTypeHandler<Boolean> {
 
     @Override
     public void setNonNullParameter(PreparedStatement ps, int i, Boolean parameter, JdbcType jdbcType) throws SQLException {

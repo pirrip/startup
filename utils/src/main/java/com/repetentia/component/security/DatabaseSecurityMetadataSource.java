@@ -3,6 +3,8 @@ package com.repetentia.component.security;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -27,31 +29,21 @@ public class DatabaseSecurityMetadataSource implements FilterInvocationSecurityM
 
     @Override
     public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
-
         FilterInvocation fi = (FilterInvocation) object;
         HttpServletRequest request = fi.getRequest();
-        String url = fi.getRequestUrl();
-//        Set<Entry<RequestMatcher, List<ConfigAttribute>>> entrySet = requestMap.entrySet();
-//        for (Entry<RequestMatcher, List<ConfigAttribute>> entry:entrySet) {
-//            RequestMatcher requestMatcher = entry.getKey();
-//            if (requestMatcher.matches(request)) {
-//                return entry.getValue();
-//            }
-//        }
-//        return null;
-        if (url.indexOf("system") > -1) {
-            return SecurityConfig.createListFromCommaDelimitedString("ROLE_USER,ROLE_ANONYMOUS");
-        } else {
-            return SecurityConfig.createListFromCommaDelimitedString("ROLE_USER");
-        }
 
+        Set<Entry<RequestMatcher, List<ConfigAttribute>>> entrySet = requestMap.entrySet();
+        for (Entry<RequestMatcher, List<ConfigAttribute>> entry:entrySet) {
+            RequestMatcher requestMatcher = entry.getKey();
+            if (requestMatcher.matches(request)) {
+                return entry.getValue();
+            }
+        }
+        return null;
     }
 
     @Override
     public Collection<ConfigAttribute> getAllConfigAttributes() {
-        log.info("###############################");
-        log.info("# init");
-        log.info("###############################");
         return null;
     }
 
