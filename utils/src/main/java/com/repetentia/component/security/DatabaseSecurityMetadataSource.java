@@ -36,10 +36,13 @@ public class DatabaseSecurityMetadataSource implements FilterInvocationSecurityM
         for (Entry<RequestMatcher, List<ConfigAttribute>> entry:entrySet) {
             RequestMatcher requestMatcher = entry.getKey();
             if (requestMatcher.matches(request)) {
-                return entry.getValue();
+                List<ConfigAttribute> list = entry.getValue();
+                log.trace("# NEED ROLE {} FOR URL {} - {}", list, fi.getRequestUrl());
+                return list;
             }
         }
-        return null;
+        log.trace("# NO URL MAPPING FOUND FOR URL - {}", fi.getRequestUrl());
+        return SecurityConfig.createList("ROLE_ANONYMOUS");
     }
 
     @Override
