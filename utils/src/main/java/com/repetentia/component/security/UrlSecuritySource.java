@@ -10,8 +10,10 @@ import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import com.repetentia.component.code.UrlSe;
 
 public class UrlSecuritySource {
     private SqlSession sqlSession;
@@ -25,10 +27,17 @@ public class UrlSecuritySource {
         Map<RequestMatcher, List<ConfigAttribute>> requestMap = new HashMap<RequestMatcher, List<ConfigAttribute>>();
         List<UrlSecurity> list = sqlSession.getMapper(UrlSecurityMapper.class).findAll();
         System.out.println(list);
-        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+        ObjectMapper om = new ObjectMapper();
+        ObjectWriter ow = om.writer().withDefaultPrettyPrinter();
+        om.enable(MapperFeature.USE_ANNOTATIONS);
+
+
         try {
             String json = ow.writeValueAsString(list);
             System.out.println(json);
+
+            String menu = ow.writeValueAsString(UrlSe.M);
+            System.out.println(menu);
         } catch (JsonProcessingException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -36,7 +45,7 @@ public class UrlSecuritySource {
 
 
         for (UrlSecurity urlSecurity:list) {
-            if (UrlSe.PAGE.equals(urlSecurity.getMenuSe()) || UrlSe.SERVICE.equals(urlSecurity.getMenuSe())) {
+            if (UrlSe.P.equals(urlSecurity.getMenuSe()) || UrlSe.S.equals(urlSecurity.getMenuSe())) {
 //                RequestMatcher requestMatcher = new AntPathRequestMatcher(null, null, false);
 
 

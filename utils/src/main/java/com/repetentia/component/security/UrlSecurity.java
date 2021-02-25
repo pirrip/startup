@@ -1,8 +1,8 @@
 package com.repetentia.component.security;
 
-import org.springframework.http.HttpMethod;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.repetentia.component.code.HttpMethod;
+import com.repetentia.component.code.UrlSe;
 
 import lombok.Data;
 
@@ -18,9 +18,6 @@ public class UrlSecurity {
       private int pqno;
       private int depth;
       private String site;
-//      @JsonSerialize(using = UrlSeSerializer.class)
-//      @JsonSerialize(using = UrlSeConverter.class)
       private UrlSe menuSe;
       private String menuNm;
-
 }

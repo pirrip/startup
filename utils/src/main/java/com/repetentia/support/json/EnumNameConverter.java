@@ -1,13 +1,13 @@
 package com.repetentia.support.json;
 
 import com.fasterxml.jackson.databind.util.StdConverter;
+import com.repetentia.component.code.RtaEnumType;
 
-@SuppressWarnings("rawtypes")
-public class EnumNameConverter extends StdConverter<Enum, String>{
+public class EnumNameConverter extends StdConverter<String, RtaEnumType> {
 
     @Override
-    public String convert(Enum value) {
-
+    public RtaEnumType convert(String value) {
+//        return UrlSe.fromCode(value);
         return null;
     }
 
