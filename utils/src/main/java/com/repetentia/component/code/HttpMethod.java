@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public enum HttpMethod implements RtaEnumType {
-
+    ALL("ALL", "ALL", "ALL", "ALL HTTP REQUEST"),
+    CRUD("CRUD", "CRUD", "CRUD", "HTTP GET, POST, PUT, PATCH, DELETE"),
+    GNP("GNP", "GETANDPOST", "GETANDPOST", "HTTP GET, POST"),
     GET("GET", "GET", "GET", "HTTP GET"),
     HEAD("HEAD", "HEAD", "HEAD", "HTTP HEAD"),
     POST("POST", "POST", "POST", "HTTP POST"),
