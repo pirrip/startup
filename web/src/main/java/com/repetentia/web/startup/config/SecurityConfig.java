@@ -1,6 +1,7 @@
 package com.repetentia.web.startup.config;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -12,16 +13,21 @@ import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.access.vote.AffirmativeBased;
 import org.springframework.security.access.vote.RoleHierarchyVoter;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 
 import com.repetentia.component.security.AjaxAuthenticationEntryPoint;
 import com.repetentia.component.security.DatabaseSecurityMetadataSource;
+import com.repetentia.component.security.RtaAuthenticationProvider;
 import com.repetentia.component.security.UrlSecuritySource;
 import com.repetentia.component.user.RtaUserDetailsService;
 
@@ -38,24 +44,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return dsms;
     }
 
-//    @Bean
-//    public AuthenticationManager getAuthenticationManager() {
-//        AuthenticationManager authenticationManager = new ProviderManager(Arrays.asList(authenticationProvider(), jwtAuthenticationProvider()));
-//        return authenticationManager;
-//    }
+    @Bean
+    public AuthenticationManager getAuthenticationManager() {
+        AuthenticationManager authenticationManager = new ProviderManager(Arrays.asList(authenticationProvider()));
+        return authenticationManager;
+    }
 
-//    public AuthenticationProvider authenticationProvider() {
-//        RtaAuthenticationProvider authenticationProvider = new RtaAuthenticationProvider();
-//        return authenticationProvider;
-//    }
+//    @Bean
+    public AuthenticationProvider authenticationProvider() {
+        RtaAuthenticationProvider authenticationProvider = new RtaAuthenticationProvider();
+        UserDetailsService userDetailsService = userDetailsService();
+        authenticationProvider.setUserDetailsService(userDetailsService);
+        return authenticationProvider;
+    }
 //
 //    public JwtAuthenticationProvider jwtAuthenticationProvider() {
 //        JwtAuthenticationProvider authenticationProvider = new JwtAuthenticationProvider();
 //        return authenticationProvider;
 //    }
 
-    @Bean
-    public RtaUserDetailsService userDetailsService() {
+    public UserDetailsService userDetailsService() {
         RtaUserDetailsService userDetailsService = new RtaUserDetailsService(sqlSession);
         return userDetailsService;
     }

@@ -16,6 +16,7 @@ import com.repetentia.component.code.HttpMethod;
 import com.repetentia.component.code.UrlSe;
 
 public class UrlSecuritySource {
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger("[# AUTHORIZING #]");
     private SqlSession sqlSession;
 
     public UrlSecuritySource(SqlSession sqlSession) {
@@ -59,6 +60,7 @@ public class UrlSecuritySource {
 
                 for (HttpMethod method:methodList) {
                     RequestMatcher requestMatcher = new AntPathRequestMatcher(pattern, method.code(), false);
+                    log.info("# URL pattern [{}][{}] for [{}]", pattern, method.code(), role);
                     List<ConfigAttribute> list = SecurityConfig.createList(role);
                     requestMap.put(requestMatcher, list);
                 }
@@ -72,9 +74,4 @@ public class UrlSecuritySource {
         @Select({ "SELECT sqno, pqno, depth, site, menu_se, menu_nm, url, method, auth, crdt, crid, updt, upid FROM user_auths_url"})
         List<UrlSecurity> findAll();
     }
-
-    public static void main(String[] args) {
-
-    }
-
 }

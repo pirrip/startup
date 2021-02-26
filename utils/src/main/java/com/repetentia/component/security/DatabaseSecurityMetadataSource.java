@@ -1,5 +1,6 @@
 package com.repetentia.component.security;
 
+import java.security.Principal;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -17,8 +18,8 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 public class DatabaseSecurityMetadataSource implements FilterInvocationSecurityMetadataSource, InitializingBean {
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger("[# AUTHORIZING #]");
     private UrlSecuritySource urlSecuritySource;
     private Map<RequestMatcher, List<ConfigAttribute>> requestMap;
 
@@ -37,12 +38,21 @@ public class DatabaseSecurityMetadataSource implements FilterInvocationSecurityM
             RequestMatcher requestMatcher = entry.getKey();
             if (requestMatcher.matches(request)) {
                 List<ConfigAttribute> list = entry.getValue();
-                log.trace("# NEED ROLE {} FOR URL {} - {}", list, fi.getRequestUrl());
+                log.info("# AUTH {} FOR URL [{}] uid is [{}]", list, fi.getRequestUrl(), getUID(request));
                 return list;
             }
         }
-        log.trace("# NO URL MAPPING FOUND FOR URL - {}", fi.getRequestUrl());
+
         return SecurityConfig.createList("ROLE_ANONYMOUS");
+    }
+
+    private String getUID(HttpServletRequest request) {
+        Principal principal = request.getUserPrincipal();
+        if (principal == null) {
+            return "ANONYMOUS";
+        } else {
+            return principal.getName();
+        }
     }
 
     @Override
