@@ -18,6 +18,7 @@ public class RtaAuthenticationProvider extends AbstractUserDetailsAuthentication
     }
 
     // DaoAuthenticationProvider 참조
+    // UsernamePasswordAuthenticationFilter
     @Override
     protected void additionalAuthenticationChecks(UserDetails userDetails, UsernamePasswordAuthenticationToken authentication) throws AuthenticationException {
         log.info("# CUSTOM AUTH - additionalAuthenticationChecks {}", userDetails);
