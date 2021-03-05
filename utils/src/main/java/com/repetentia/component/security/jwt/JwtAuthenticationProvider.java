@@ -1,4 +1,4 @@
-package com.repetentia.component.security;
+package com.repetentia.component.security.jwt;
 
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
