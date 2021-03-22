@@ -9,15 +9,15 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class LoggingFilterConfig {
-	@Bean
-	public RtaLoggingFilter logFilter() {
-		RtaLoggingFilter filter = new RtaLoggingFilter();
-		filter.setIncludeQueryString(true);
-		filter.setIncludePayload(true);
-		filter.setMaxPayloadLength(10000);
-		filter.setIncludeHeaders(false);
-		filter.setAfterMessagePrefix("REQUEST DATA : ");
-		log.info(Marker.CONFIG, "# REGISTERING FILTER");
-		return filter;
-	}
+    @Bean
+    public RtaLoggingFilter logFilter() {
+        RtaLoggingFilter filter = new RtaLoggingFilter();
+        filter.setIncludeQueryString(true);
+        filter.setIncludePayload(true);
+        filter.setMaxPayloadLength(10000);
+        filter.setIncludeHeaders(false);
+        filter.setAfterMessagePrefix("REQUEST DATA : ");
+        log.info(Marker.CONFIG, "# REGISTERING FILTER");
+        return filter;
+    }
 }

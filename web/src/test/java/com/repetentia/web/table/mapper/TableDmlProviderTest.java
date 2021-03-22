@@ -11,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class TableDmlProviderTest {
-    
+
     @Test
     @DisplayName("TABLE INSERT TEST")
     public void insert() {
@@ -44,7 +44,7 @@ public class TableDmlProviderTest {
         String sql = sp.find(fileMeta);
         log.info(".find - SQL : \r\n{}", sql);
     }
-    
+
     @Test
     public void findAll() {
         TableDmlProvider sp = new TableDmlProvider();

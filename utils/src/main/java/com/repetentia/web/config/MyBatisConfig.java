@@ -94,10 +94,10 @@ public class MyBatisConfig {
         RtaEnumTypeHandler<UrlSe> urlSecuritySeHandler = new RtaEnumTypeHandler<UrlSe>(UrlSe.class);
 
         TypeHandler[] typeHandlers = {
-            new BooleanTFTypeHandler(),
-            new BlobFileInputStreamTypeHandler(),
-            httpMethodHandler,
-            urlSecuritySeHandler,
+                new BooleanTFTypeHandler(),
+                new BlobFileInputStreamTypeHandler(),
+                httpMethodHandler,
+                urlSecuritySeHandler,
         };
 
         return typeHandlers;

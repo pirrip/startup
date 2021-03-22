@@ -24,12 +24,12 @@ public class ReflectionUtils {
     public static boolean isNotNull(Object instance, String name) {
         return !isNull(instance, name);
     }
-    
+
     public static String getProperty(Object instance, String name) {
-    	Object value = getPropertyObject(instance, name);
-        return value==null?null:value.toString();
+        Object value = getPropertyObject(instance, name);
+        return value == null ? null : value.toString();
     }
-    
+
     public static Object getPropertyObject(Object instance, String name) {
         Object value = null;
         try {
@@ -37,7 +37,7 @@ public class ReflectionUtils {
             if (field != null) {
                 field.setAccessible(true);
                 value = field.get(instance);
-                field.setAccessible(false);            	
+                field.setAccessible(false);
             }
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
@@ -46,19 +46,19 @@ public class ReflectionUtils {
         }
         return value;
     }
-    
+
     private static Field getFieldRecursive(Class<?> clazz, String name) {
-    	Field field = null;
-		try {
-			field = clazz.getDeclaredField(name);
-		} catch (NoSuchFieldException e) {
-			Class<?> superClazz = clazz.getSuperclass();
-			if (!Object.class.equals(superClazz)) {
-				field = getFieldRecursive(superClazz, name);
-			}
-		} catch (SecurityException e) {
-			e.printStackTrace();
-		}
-    	return field;
+        Field field = null;
+        try {
+            field = clazz.getDeclaredField(name);
+        } catch (NoSuchFieldException e) {
+            Class<?> superClazz = clazz.getSuperclass();
+            if (!Object.class.equals(superClazz)) {
+                field = getFieldRecursive(superClazz, name);
+            }
+        } catch (SecurityException e) {
+            e.printStackTrace();
+        }
+        return field;
     }
 }

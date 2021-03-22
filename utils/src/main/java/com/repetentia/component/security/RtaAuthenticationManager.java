@@ -9,12 +9,11 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class RtaAuthenticationManager implements AuthenticationManager {
 
-	@Override
-	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-		log.info("# AUTH - {}", authentication);
-		
-		
-		return authentication;
-	}
+    @Override
+    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+        log.info("# AUTH - {}", authentication);
+
+        return authentication;
+    }
 
 }

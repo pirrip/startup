@@ -12,6 +12,6 @@ public class FileHolder {
     @Id
     @Column(name = "filename")
     private String filename;
-    @Column(name="file")
+    @Column(name = "file")
     private byte[] file;
 }

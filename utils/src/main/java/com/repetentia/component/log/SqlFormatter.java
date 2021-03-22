@@ -6,7 +6,6 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.StringTokenizer;
 
-
 public class SqlFormatter {
     private static final String WHITESPACE = " \n\r\f\t";
     private static final Set<String> BEGIN_CLAUSES = new HashSet<String>();
@@ -17,54 +16,54 @@ public class SqlFormatter {
     private static final Set<String> MISC = new HashSet<String>();
 
     static {
-        BEGIN_CLAUSES.add( "left" );
-        BEGIN_CLAUSES.add( "right" );
-        BEGIN_CLAUSES.add( "inner" );
-        BEGIN_CLAUSES.add( "outer" );
-        BEGIN_CLAUSES.add( "group" );
-        BEGIN_CLAUSES.add( "order" );
+        BEGIN_CLAUSES.add("left");
+        BEGIN_CLAUSES.add("right");
+        BEGIN_CLAUSES.add("inner");
+        BEGIN_CLAUSES.add("outer");
+        BEGIN_CLAUSES.add("group");
+        BEGIN_CLAUSES.add("order");
 
-        END_CLAUSES.add( "where" );
-        END_CLAUSES.add( "set" );
-        END_CLAUSES.add( "having" );
-        END_CLAUSES.add( "from" );
-        END_CLAUSES.add( "by" );
-        END_CLAUSES.add( "join" );
-        END_CLAUSES.add( "into" );
-        END_CLAUSES.add( "union" );
+        END_CLAUSES.add("where");
+        END_CLAUSES.add("set");
+        END_CLAUSES.add("having");
+        END_CLAUSES.add("from");
+        END_CLAUSES.add("by");
+        END_CLAUSES.add("join");
+        END_CLAUSES.add("into");
+        END_CLAUSES.add("union");
 
-        LOGICAL.add( "and" );
-        LOGICAL.add( "or" );
-        LOGICAL.add( "when" );
-        LOGICAL.add( "else" );
-        LOGICAL.add( "end" );
+        LOGICAL.add("and");
+        LOGICAL.add("or");
+        LOGICAL.add("when");
+        LOGICAL.add("else");
+        LOGICAL.add("end");
 
-        QUANTIFIERS.add( "in" );
-        QUANTIFIERS.add( "all" );
-        QUANTIFIERS.add( "exists" );
-        QUANTIFIERS.add( "some" );
-        QUANTIFIERS.add( "any" );
+        QUANTIFIERS.add("in");
+        QUANTIFIERS.add("all");
+        QUANTIFIERS.add("exists");
+        QUANTIFIERS.add("some");
+        QUANTIFIERS.add("any");
 
-        DML.add( "insert" );
-        DML.add( "update" );
-        DML.add( "delete" );
+        DML.add("insert");
+        DML.add("update");
+        DML.add("delete");
 
-        MISC.add( "select" );
-        MISC.add( "on" );
+        MISC.add("select");
+        MISC.add("on");
     }
 
     private static final String INDENT_STRING = "    ";
     private static final String INITIAL = System.lineSeparator() + INDENT_STRING;
 
     public String format(StringBuffer sb) {
-    	String source = sb.toString().replaceAll("\\s+,", ",").replaceAll("\\s+\\)", ")");
-    	String formatted = format(source);
-    	return formatted;
+        String source = sb.toString().replaceAll("\\s+,", ",").replaceAll("\\s+\\)", ")");
+        String formatted = format(source);
+        return formatted;
     }
-	
+
     public String format(String sb) {
-    	String source = sb.replaceAll("\\s+,", ",").replaceAll("\\s+\\)", ")");
-        return new FormatProcess( source ).perform();
+        String source = sb.replaceAll("\\s+,", ",").replaceAll("\\s+\\)", ")");
+        return new FormatProcess(source).perform();
     }
 
     private static class FormatProcess {
@@ -97,88 +96,83 @@ public class SqlFormatter {
 
         public String perform() {
 
-            result.append( INITIAL );
+            result.append(INITIAL);
 
-            while ( tokens.hasMoreTokens() ) {
+            while (tokens.hasMoreTokens()) {
                 token = tokens.nextToken();
                 lcToken = token.toLowerCase(Locale.ROOT);
 
-                if ( "'".equals( token ) ) {
+                if ("'".equals(token)) {
                     String t;
                     do {
                         t = tokens.nextToken();
                         token += t;
                     }
                     // cannot handle single quotes
-                    while ( !"'".equals( t ) && tokens.hasMoreTokens() );
-                }
-                else if ( "\"".equals( token ) ) {
+                    while (!"'".equals(t) && tokens.hasMoreTokens());
+                } else if ("\"".equals(token)) {
                     String t;
                     do {
                         t = tokens.nextToken();
                         token += t;
-                    }
-                    while ( !"\"".equals( t )  && tokens.hasMoreTokens() );
+                    } while (!"\"".equals(t) && tokens.hasMoreTokens());
                 }
                 // SQL Server uses "[" and "]" to escape reserved words
                 // see SQLServerDialect.openQuote and SQLServerDialect.closeQuote
-                else if ( "[".equals( token ) ) {
+                else if ("[".equals(token)) {
                     String t;
                     do {
                         t = tokens.nextToken();
                         token += t;
-                    }
-                    while ( !"]".equals( t ) && tokens.hasMoreTokens());
+                    } while (!"]".equals(t) && tokens.hasMoreTokens());
                 }
 
-                if ( afterByOrSetOrFromOrSelect && ",".equals( token ) ) {
+                if (afterByOrSetOrFromOrSelect && ",".equals(token)) {
                     commaAfterByOrFromOrSelect();
-                }
-                else if ( afterOn && ",".equals( token ) ) {
+                } else if (afterOn && ",".equals(token)) {
                     commaAfterOn();
                 }
 
-                else if ( "(".equals( token ) ) {
+                else if ("(".equals(token)) {
                     openParen();
-                }
-                else if ( ")".equals( token ) ) {
+                } else if (")".equals(token)) {
                     closeParen();
                 }
 
-                else if ( BEGIN_CLAUSES.contains( lcToken ) ) {
+                else if (BEGIN_CLAUSES.contains(lcToken)) {
                     beginNewClause();
                 }
 
-                else if ( END_CLAUSES.contains( lcToken ) ) {
+                else if (END_CLAUSES.contains(lcToken)) {
                     endNewClause();
                 }
 
-                else if ( "select".equals( lcToken ) ) {
+                else if ("select".equals(lcToken)) {
                     select();
                 }
 
-                else if ( DML.contains( lcToken ) ) {
+                else if (DML.contains(lcToken)) {
                     updateOrInsertOrDelete();
                 }
 
-                else if ( "values".equals( lcToken ) ) {
+                else if ("values".equals(lcToken)) {
                     values();
                 }
 
-                else if ( "on".equals( lcToken ) ) {
+                else if ("on".equals(lcToken)) {
                     on();
                 }
 
-                else if ( afterBetween && lcToken.equals( "and" ) ) {
+                else if (afterBetween && lcToken.equals("and")) {
                     misc();
                     afterBetween = false;
                 }
 
-                else if ( LOGICAL.contains( lcToken ) ) {
+                else if (LOGICAL.contains(lcToken)) {
                     logical();
                 }
 
-                else if ( isWhitespace( token ) ) {
+                else if (isWhitespace(token)) {
                     white();
                 }
 
@@ -186,7 +180,7 @@ public class SqlFormatter {
                     misc();
                 }
 
-                if ( !isWhitespace( token ) ) {
+                if (!isWhitespace(token)) {
                     lastToken = lcToken;
                 }
 
@@ -208,7 +202,7 @@ public class SqlFormatter {
         }
 
         private void logical() {
-            if ( "end".equals( lcToken ) ) {
+            if ("end".equals(lcToken)) {
                 indent--;
             }
             newline();
@@ -226,24 +220,23 @@ public class SqlFormatter {
 
         private void misc() {
             out();
-            if ( "between".equals( lcToken ) ) {
+            if ("between".equals(lcToken)) {
                 afterBetween = true;
             }
-            if ( afterInsert ) {
+            if (afterInsert) {
                 newline();
                 afterInsert = false;
-            }
-            else {
+            } else {
                 beginLine = false;
-                if ( "case".equals( lcToken ) ) {
+                if ("case".equals(lcToken)) {
                     indent++;
                 }
             }
         }
 
         private void white() {
-            if ( !beginLine ) {
-                result.append( " " );
+            if (!beginLine) {
+                result.append(" ");
             }
         }
 
@@ -251,10 +244,10 @@ public class SqlFormatter {
             out();
             indent++;
             beginLine = false;
-            if ( "update".equals( lcToken ) ) {
+            if ("update".equals(lcToken)) {
                 newline();
             }
-            if ( "insert".equals( lcToken ) ) {
+            if ("insert".equals(lcToken)) {
                 afterInsert = true;
             }
         }
@@ -263,39 +256,39 @@ public class SqlFormatter {
             out();
             indent++;
             newline();
-            parenCounts.addLast( parensSinceSelect );
-            afterByOrFromOrSelects.addLast( afterByOrSetOrFromOrSelect );
+            parenCounts.addLast(parensSinceSelect);
+            afterByOrFromOrSelects.addLast(afterByOrSetOrFromOrSelect);
             parensSinceSelect = 0;
             afterByOrSetOrFromOrSelect = true;
         }
 
         private void out() {
-            result.append( token );
+            result.append(token);
         }
 
         private void endNewClause() {
-            if ( !afterBeginBeforeEnd ) {
+            if (!afterBeginBeforeEnd) {
                 indent--;
-                if ( afterOn ) {
+                if (afterOn) {
                     indent--;
                     afterOn = false;
                 }
                 newline();
             }
             out();
-            if ( !"union".equals( lcToken ) ) {
+            if (!"union".equals(lcToken)) {
                 indent++;
             }
             newline();
             afterBeginBeforeEnd = false;
-            afterByOrSetOrFromOrSelect = "by".equals( lcToken )
-                    || "set".equals( lcToken )
-                    || "from".equals( lcToken );
+            afterByOrSetOrFromOrSelect = "by".equals(lcToken)
+                    || "set".equals(lcToken)
+                    || "from".equals(lcToken);
         }
 
         private void beginNewClause() {
-            if ( !afterBeginBeforeEnd ) {
-                if ( afterOn ) {
+            if (!afterBeginBeforeEnd) {
+                if (afterOn) {
                     indent--;
                     afterOn = false;
                 }
@@ -317,17 +310,16 @@ public class SqlFormatter {
 
         private void closeParen() {
             parensSinceSelect--;
-            if ( parensSinceSelect < 0 ) {
+            if (parensSinceSelect < 0) {
                 indent--;
                 parensSinceSelect = parenCounts.removeLast();
                 afterByOrSetOrFromOrSelect = afterByOrFromOrSelects.removeLast();
             }
-            if ( inFunction > 0 ) {
+            if (inFunction > 0) {
                 inFunction--;
                 out();
-            }
-            else {
-                if ( !afterByOrSetOrFromOrSelect ) {
+            } else {
+                if (!afterByOrSetOrFromOrSelect) {
                     indent--;
                     newline();
                 }
@@ -337,16 +329,15 @@ public class SqlFormatter {
         }
 
         private void openParen() {
-            if ( isFunctionName( lastToken ) || inFunction > 0 ) {
+            if (isFunctionName(lastToken) || inFunction > 0) {
                 inFunction++;
             }
             beginLine = false;
-            if ( inFunction > 0 ) {
+            if (inFunction > 0) {
                 out();
-            }
-            else {
+            } else {
                 out();
-                if ( !afterByOrSetOrFromOrSelect ) {
+                if (!afterByOrSetOrFromOrSelect) {
                     indent++;
                     newline();
                     beginLine = true;
@@ -356,28 +347,28 @@ public class SqlFormatter {
         }
 
         private static boolean isFunctionName(String tok) {
-            if ( tok == null || tok.length() == 0 ) {
+            if (tok == null || tok.length() == 0) {
                 return false;
             }
 
-            final char begin = tok.charAt( 0 );
-            final boolean isIdentifier = Character.isJavaIdentifierStart( begin ) || '"' == begin;
+            final char begin = tok.charAt(0);
+            final boolean isIdentifier = Character.isJavaIdentifierStart(begin) || '"' == begin;
             return isIdentifier &&
-                    !LOGICAL.contains( tok ) &&
-                    !END_CLAUSES.contains( tok ) &&
-                    !QUANTIFIERS.contains( tok ) &&
-                    !DML.contains( tok ) &&
-                    !MISC.contains( tok );
+                    !LOGICAL.contains(tok) &&
+                    !END_CLAUSES.contains(tok) &&
+                    !QUANTIFIERS.contains(tok) &&
+                    !DML.contains(tok) &&
+                    !MISC.contains(tok);
         }
 
         private static boolean isWhitespace(String token) {
-            return WHITESPACE.contains( token );
+            return WHITESPACE.contains(token);
         }
 
         private void newline() {
-            result.append( System.lineSeparator() );
-            for ( int i = 0; i < indent; i++ ) {
-                result.append( INDENT_STRING );
+            result.append(System.lineSeparator());
+            for (int i = 0; i < indent; i++) {
+                result.append(INDENT_STRING);
             }
             beginLine = true;
         }

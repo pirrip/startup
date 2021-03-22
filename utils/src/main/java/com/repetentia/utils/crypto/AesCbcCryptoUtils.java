@@ -21,16 +21,17 @@ import javax.crypto.spec.SecretKeySpec;
 import lombok.extern.slf4j.Slf4j;
 
 public class AesCbcCryptoUtils {
-	private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AesCbcCryptoUtils.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AesCbcCryptoUtils.class);
     private final static int AES = 256;
-    private final static int AES_CBC_IV = AES / 8 /2;
+    private final static int AES_CBC_IV = AES / 8 / 2;
     private final static String AES_CBC = "AES/CBC/PKCS5Padding";
 
     private final static String PBKDF2_NAME = "PBKDF2WithHmacSHA256";
     private final static int PBKDF2_SALT_SIZE = 16;
     private final static int PBKDF2_ITERATIONS = 32767;
 
-    public static String encryptString(String plaintext, String password) throws NoSuchAlgorithmException, InvalidKeySpecException, InvalidKeyException, InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException {
+    public static String encryptString(String plaintext, String password)
+            throws NoSuchAlgorithmException, InvalidKeySpecException, InvalidKeyException, InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException {
         // Generate a 128-bit salt using a CSPRNG.
         SecureRandom rand = new SecureRandom();
         byte[] salt = new byte[PBKDF2_SALT_SIZE];
@@ -53,7 +54,8 @@ public class AesCbcCryptoUtils {
         return Base64.getEncoder().encodeToString(ciphertextAndNonceAndSalt);
     }
 
-    public static String decryptString(String base64CiphertextAndNonceAndSalt, String password) throws NoSuchAlgorithmException, InvalidKeySpecException, InvalidKeyException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException, NoSuchPaddingException {
+    public static String decryptString(String base64CiphertextAndNonceAndSalt, String password)
+            throws NoSuchAlgorithmException, InvalidKeySpecException, InvalidKeyException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException, NoSuchPaddingException {
         // Decode the base64.
         byte[] ciphertextAndNonceAndSalt = Base64.getDecoder().decode(base64CiphertextAndNonceAndSalt);
 
@@ -112,13 +114,12 @@ public class AesCbcCryptoUtils {
     }
 
     public static void main(String[] args) throws InvalidKeyException, NoSuchAlgorithmException, InvalidKeySpecException, InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException {
-    	String data = "암호화될 데이터";
-    	System.out.println(Arrays.toString(data.getBytes()));
-    	String pw = "password";
-    	String enc = encryptString(data, pw);
-    	System.out.println(enc);
-    	System.out.println(decryptString(enc, pw));
+        String data = "암호화될 데이터";
+        System.out.println(Arrays.toString(data.getBytes()));
+        String pw = "password";
+        String enc = encryptString(data, pw);
+        System.out.println(enc);
+        System.out.println(decryptString(enc, pw));
 
-
-	}
+    }
 }

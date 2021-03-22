@@ -6,15 +6,15 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class JspController {
-	@RequestMapping("/sample")
-	public ModelAndView page(ModelAndView mav) {
-		mav.setViewName("sample");
-		return mav;
-	}
-	
-	@RequestMapping("/tiles")
-	public ModelAndView tiles(ModelAndView mav) {
-		mav.setViewName("tiles:tiles");
-		return mav;
-	}	
+    @RequestMapping("/sample")
+    public ModelAndView page(ModelAndView mav) {
+        mav.setViewName("sample");
+        return mav;
+    }
+
+    @RequestMapping("/tiles")
+    public ModelAndView tiles(ModelAndView mav) {
+        mav.setViewName("tiles:tiles");
+        return mav;
+    }
 }

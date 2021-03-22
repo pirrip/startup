@@ -26,6 +26,7 @@ public class EnumTest {
         }
 
     }
+
     @Test
     public void deserialize() {
         ObjectMapper om = new ObjectMapper();

@@ -9,7 +9,7 @@ import com.repetentia.component.message.DatabaseResourceBundleMessageSource;
 public class MessageSourceConfig {
     @Autowired
     SqlSession sqlSession;
-    
+
     @Bean
     public DatabaseResourceBundleMessageSource resourceBundleMessageSource() {
         DatabaseResourceBundleMessageSource messageSource = new DatabaseResourceBundleMessageSource();

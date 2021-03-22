@@ -10,11 +10,11 @@ public class AesEcbCryptoUtils {
     private static final String TRANSFORM = "AES/ECB/PKCS5Padding";
 
     public static String encrypt(String plainText, String privateKey) throws Exception {
-        
-        if(!StringUtils.hasText(plainText)) {
+
+        if (!StringUtils.hasText(plainText)) {
             return plainText;
         }
-        
+
         KeyGenerator kgen = KeyGenerator.getInstance("AES");
         kgen.init(128);
 
@@ -29,7 +29,7 @@ public class AesEcbCryptoUtils {
     }
 
     public static String decrypt(String cipherText, String privateKey) throws Exception {
-        if(!StringUtils.hasText(cipherText)) {
+        if (!StringUtils.hasText(cipherText)) {
             return cipherText;
         }
 
@@ -46,7 +46,7 @@ public class AesEcbCryptoUtils {
 
         return originalString;
     }
-    
+
     private static String asHex(byte buf[]) {
         StringBuffer strbuf = new StringBuffer(buf.length * 2);
         int i;
@@ -75,7 +75,7 @@ public class AesEcbCryptoUtils {
         }
         return buf;
     }
-    
+
     private static int fromDigit(char ch) {
         if (ch >= '0' && ch <= '9')
             return ch - '0';
@@ -86,6 +86,7 @@ public class AesEcbCryptoUtils {
 
         throw new IllegalArgumentException("invalid hex digit '" + ch + "'");
     }
+
     public static void main(String[] args) throws Exception {
         String word = "wtf!!! hell!!";
         String pk = "wordashell123456wordashell123456";

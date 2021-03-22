@@ -17,11 +17,13 @@ import org.apache.logging.log4j.Logger;
 public class XssSaveInterceptor implements Interceptor {
     private static final Logger LOGGER = LogManager.getLogger(XssSaveInterceptor.class);
     private static final int MOD = Modifier.STATIC | Modifier.FINAL;
+
     public static void main(String[] args) {
         System.out.println(Modifier.STATIC);
         System.out.println(Modifier.FINAL);
         System.out.println(MOD);
     }
+
     @Override
     public Object intercept(Invocation invocation) throws Throwable {
         Object[] args = invocation.getArgs();

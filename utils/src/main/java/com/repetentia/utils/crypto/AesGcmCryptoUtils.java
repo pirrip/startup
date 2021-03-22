@@ -26,7 +26,7 @@ public class AesGcmCryptoUtils {
     private final static String PBKDF2_NAME = "PBKDF2WithHmacSHA256";
     private final static int PBKDF2_SALT_SIZE = 16;
     private final static int PBKDF2_ITERATIONS = 32767;
-    
+
     public static void main(String[] args) throws InvalidKeyException, NoSuchAlgorithmException, InvalidKeySpecException, InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException {
         String text = "hell!!!";
         String password = "this";
@@ -35,8 +35,9 @@ public class AesGcmCryptoUtils {
         String ff = decryptString(str, password);
         System.out.println(ff);
     }
-    
-    public static String encryptString(String plaintext, String password) throws NoSuchAlgorithmException, InvalidKeySpecException, InvalidKeyException, InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException {
+
+    public static String encryptString(String plaintext, String password)
+            throws NoSuchAlgorithmException, InvalidKeySpecException, InvalidKeyException, InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException {
         // Generate a 128-bit salt using a CSPRNG.
         SecureRandom rand = new SecureRandom();
         byte[] salt = new byte[PBKDF2_SALT_SIZE];
@@ -57,7 +58,8 @@ public class AesGcmCryptoUtils {
         return Base64.getEncoder().encodeToString(ciphertextAndNonceAndSalt);
     }
 
-    public static String decryptString(String base64CiphertextAndNonceAndSalt, String password) throws NoSuchAlgorithmException, InvalidKeySpecException, InvalidKeyException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException, NoSuchPaddingException {
+    public static String decryptString(String base64CiphertextAndNonceAndSalt, String password)
+            throws NoSuchAlgorithmException, InvalidKeySpecException, InvalidKeyException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException, NoSuchPaddingException {
         // Decode the base64.
         byte[] ciphertextAndNonceAndSalt = Base64.getDecoder().decode(base64CiphertextAndNonceAndSalt);
 

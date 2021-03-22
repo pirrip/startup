@@ -138,7 +138,7 @@ public class DatabasePropertyLoader {
                 log.warn("{}", e.getCause());
                 log.warn("{}", e.getLocalizedMessage());
             }
-            
+
             log.warn(Marker.BOOT_CONFIG, "# FAILED TO LOAD DATABASE PROPERTIES - {}", e.getMessage());
             log.warn(Marker.BOOT_CONFIG, "# DATABASE PROPERTIES not ACTIVE !!!!");
         }

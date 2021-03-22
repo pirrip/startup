@@ -32,5 +32,4 @@ public class RtaAuthenticationProvider extends AbstractUserDetailsAuthentication
         return userDetails;
     }
 
-
 }

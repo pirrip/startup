@@ -20,7 +20,7 @@ public class HttpRequestConfig {
 
             @Override
             public void requestInitialized(ServletRequestEvent sre) {
-                HttpServletRequest hsr = (HttpServletRequest)sre.getServletRequest();
+                HttpServletRequest hsr = (HttpServletRequest) sre.getServletRequest();
                 Principal principal = hsr.getUserPrincipal();
                 HttpSession session = hsr.getSession(true);
                 String principalName = getName(principal);
@@ -39,6 +39,7 @@ public class HttpRequestConfig {
             }
         };
     }
+
     private String getName(Principal principal) {
         if (ObjectUtils.isEmpty(principal)) {
             return "anonymous";

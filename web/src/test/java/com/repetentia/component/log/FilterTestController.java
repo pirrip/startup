@@ -10,11 +10,11 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Controller
 public class FilterTestController {
-	@ResponseBody
-	@PostMapping("/test")
-	public String test(@RequestBody TBean bean) {
-		log.info("## /test - for filter - {}", bean);
-		
-		return "{\"code\":404}";
-	}
+    @ResponseBody
+    @PostMapping("/test")
+    public String test(@RequestBody TBean bean) {
+        log.info("## /test - for filter - {}", bean);
+
+        return "{\"code\":404}";
+    }
 }

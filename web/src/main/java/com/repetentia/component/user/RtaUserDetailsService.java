@@ -35,7 +35,8 @@ public class RtaUserDetailsService implements UserDetailsService {
             loadUserByUsername(username);
         }
 
-        if (userDetails == null) throw new UsernameNotFoundException(String.format("%s not in database", username));
+        if (userDetails == null)
+            throw new UsernameNotFoundException(String.format("%s not in database", username));
         List<GrantedAuthority> list = new ArrayList<GrantedAuthority>();
         list.add(new SimpleGrantedAuthority("ROLE_USER"));
         userDetails.setAuthorities(list);
@@ -44,12 +45,12 @@ public class RtaUserDetailsService implements UserDetailsService {
 
     interface RtaUserDetailsMapper {
         @Select({
-            "SELECT"
-                ," uid as username, pwd as password, name, alias, email, mobile, usergroup,"
-                ," account_non_expired, account_non_locked, credentials_non_expired, enabled,"
-                ," crdt, crid, updt, upid "
-            ,"FROM user_details "
-            ,"WHERE uid = #{uid}"
+                "SELECT",
+                "   uid as username, pwd as password, name, alias, email, mobile, usergroup,",
+                "   account_non_expired, account_non_locked, credentials_non_expired, enabled,",
+                "   crdt, crid, updt, upid ",
+                "  FROM user_details ",
+                " WHERE uid = #{uid}"
         })
         RtaUserDetails find(String uid);
     }

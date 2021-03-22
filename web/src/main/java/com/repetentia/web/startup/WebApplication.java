@@ -18,24 +18,24 @@ import lombok.extern.slf4j.Slf4j;
 //(exclude = { SecurityAutoConfiguration.class, ManagementWebSecurityAutoConfiguration.class })
 public class WebApplication {
 
-	public static void main(String[] args) {
-		SpringApplication app = new SpringApplication(WebApplication.class);
-		log.info("parameter", Arrays.toString(args));
+    public static void main(String[] args) {
+        SpringApplication app = new SpringApplication(WebApplication.class);
+        log.info("parameter", Arrays.toString(args));
 //		String profile = System.getProperty("spring.profiles.active");
 //		System.out.println(profile);
 //		System.setProperty("spring.profiles.default", "prod");
-		String def  = System.getProperty("spring.profiles.default");
-		log.info("# default profile  : {}" , def);
-		
+        String def = System.getProperty("spring.profiles.default");
+        log.info("# default profile  : {}", def);
+
 //		if (profile == null) {
 //			app.setAdditionalProfiles("local");
 //		} else {
 //			app.setAdditionalProfiles(profile);
 //		}
 
-		app.setDefaultProperties(Collections.singletonMap("server.port", "8090"));
-		app.run(args);
+        app.setDefaultProperties(Collections.singletonMap("server.port", "8090"));
+        app.run(args);
 
-	}
+    }
 
 }

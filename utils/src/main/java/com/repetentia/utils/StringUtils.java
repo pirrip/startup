@@ -7,7 +7,7 @@ public class StringUtils {
 
     public static boolean hasText(Object text) {
         if (text instanceof String) {
-            return org.springframework.util.StringUtils.hasText((String)text);
+            return org.springframework.util.StringUtils.hasText((String) text);
         } else {
             return false;
         }
@@ -25,8 +25,7 @@ public class StringUtils {
 
     public static String underscoreToCamel(String text) {
 
-        StringBuilder builder
-            = new StringBuilder(text);
+        StringBuilder builder = new StringBuilder(text);
 
         for (int i = 0; i < builder.length(); i++) {
 

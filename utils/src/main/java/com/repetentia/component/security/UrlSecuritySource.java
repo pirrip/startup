@@ -28,7 +28,7 @@ public class UrlSecuritySource {
         Map<RequestMatcher, List<ConfigAttribute>> requestMap = new HashMap<RequestMatcher, List<ConfigAttribute>>();
         List<UrlSecurity> urlSecurities = sqlSession.getMapper(UrlSecurityMapper.class).findAll();
 
-        for (UrlSecurity urlSecurity:urlSecurities) {
+        for (UrlSecurity urlSecurity : urlSecurities) {
             if (UrlSe.P.equals(urlSecurity.getMenuSe()) || UrlSe.S.equals(urlSecurity.getMenuSe())) {
                 String pattern = String.format("%s%s", urlSecurity.getUrl(), "**");
                 HttpMethod httpMethod = urlSecurity.getMethod();
@@ -56,9 +56,9 @@ public class UrlSecuritySource {
                     methodList.add(httpMethod);
                 }
 
-                String role = String.format("ROLE_%s", urlSecurity.getAuth()) ;
+                String role = String.format("ROLE_%s", urlSecurity.getAuth());
 
-                for (HttpMethod method:methodList) {
+                for (HttpMethod method : methodList) {
                     RequestMatcher requestMatcher = new AntPathRequestMatcher(pattern, method.code(), false);
                     log.info("# URL pattern [{}][{}] for [{}]", pattern, method.code(), role);
                     List<ConfigAttribute> list = SecurityConfig.createList(role);
@@ -71,7 +71,7 @@ public class UrlSecuritySource {
     }
 
     interface UrlSecurityMapper {
-        @Select({ "SELECT sqno, pqno, depth, site, menu_se, menu_nm, url, method, auth, crdt, crid, updt, upid FROM user_auths_url"})
+        @Select({ "SELECT sqno, pqno, depth, site, menu_se, menu_nm, url, method, auth, crdt, crid, updt, upid FROM user_auths_url" })
         List<UrlSecurity> findAll();
     }
 }

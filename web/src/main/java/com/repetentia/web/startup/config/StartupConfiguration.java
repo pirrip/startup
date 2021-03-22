@@ -25,32 +25,33 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Configuration
-@Profile({"dev", "prod", "default"})
+@Profile({ "dev", "prod", "default" })
 @Import({
-    LoggingFilterConfig.class,
-    LiquibaseConfig.class,
-    MyBatisConfig.class,
-    MyBatisMapperScannerConfig.class,
-    MessageSourceConfig.class,
-    PropertiesConfig.class,
-    TilesConfig.class,
-    CommandMapperConfig.class,
+        LoggingFilterConfig.class,
+        LiquibaseConfig.class,
+        MyBatisConfig.class,
+        MyBatisMapperScannerConfig.class,
+        MessageSourceConfig.class,
+        PropertiesConfig.class,
+        TilesConfig.class,
+        CommandMapperConfig.class,
 })
 public class StartupConfiguration {
 
     public StartupConfiguration(Environment env) {
-        String [] profiles = env.getActiveProfiles();
-        String [] defaultProfiles = env.getDefaultProfiles();
+        String[] profiles = env.getActiveProfiles();
+        String[] defaultProfiles = env.getDefaultProfiles();
         log.info(Marker.CONFIG, "#  active Profiles - {}", Arrays.toString(profiles));
         log.info(Marker.CONFIG, "# default Profiles - {}", Arrays.toString(defaultProfiles));
     }
 
     @Bean
     public TomcatServletWebServerFactory tomcatFactory() {
-       return new TomcatServletWebServerFactory() {
-          @Override
-          protected void postProcessContext(Context context) {
-             ((StandardJarScanner) context.getJarScanner()).setScanManifest(false);
-       }};
+        return new TomcatServletWebServerFactory() {
+            @Override
+            protected void postProcessContext(Context context) {
+                ((StandardJarScanner) context.getJarScanner()).setScanManifest(false);
+            }
+        };
     }
 }

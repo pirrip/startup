@@ -1,6 +1,5 @@
 package com.repetentia.web.config;
 
-
 import java.util.Collection;
 
 import org.apache.ibatis.binding.MapperRegistry;
@@ -26,7 +25,7 @@ public class TestConfig implements InitializingBean {
         MapperRegistry mr = configuration.getMapperRegistry();
         Collection<MappedStatement> stmts = configuration.getMappedStatements();
         log.info("# {} ", stmts);
-        for (MappedStatement ms:stmts) {
+        for (MappedStatement ms : stmts) {
             Object param = new Object();
             BoundSql boundSql = ms.getBoundSql(param);
             String sql = boundSql.getSql();

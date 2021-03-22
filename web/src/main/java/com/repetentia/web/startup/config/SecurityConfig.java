@@ -69,29 +69,29 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     public FilterSecurityInterceptor filterSecurityInterceptor() {
-      FilterSecurityInterceptor filterSecurityInterceptor = new FilterSecurityInterceptor();
-      filterSecurityInterceptor.setSecurityMetadataSource(databaseSecurityMetadataSource());
-      filterSecurityInterceptor.setAccessDecisionManager(affirmativeBased());
-      return filterSecurityInterceptor;
+        FilterSecurityInterceptor filterSecurityInterceptor = new FilterSecurityInterceptor();
+        filterSecurityInterceptor.setSecurityMetadataSource(databaseSecurityMetadataSource());
+        filterSecurityInterceptor.setAccessDecisionManager(affirmativeBased());
+        return filterSecurityInterceptor;
     }
 
     public AffirmativeBased affirmativeBased() {
-      List<AccessDecisionVoter<? extends Object>> accessDecisionVoters = new ArrayList<>();
-      accessDecisionVoters.add(roleVoter());
-      AffirmativeBased affirmativeBased = new AffirmativeBased(accessDecisionVoters);
-      return affirmativeBased;
+        List<AccessDecisionVoter<? extends Object>> accessDecisionVoters = new ArrayList<>();
+        accessDecisionVoters.add(roleVoter());
+        AffirmativeBased affirmativeBased = new AffirmativeBased(accessDecisionVoters);
+        return affirmativeBased;
     }
 
     public RoleHierarchyVoter roleVoter() {
-      RoleHierarchyVoter roleHierarchyVoter = new RoleHierarchyVoter(roleHierarchy());
-      roleHierarchyVoter.setRolePrefix("ROLE_");
-      return roleHierarchyVoter;
+        RoleHierarchyVoter roleHierarchyVoter = new RoleHierarchyVoter(roleHierarchy());
+        roleHierarchyVoter.setRolePrefix("ROLE_");
+        return roleHierarchyVoter;
     }
 
     public RoleHierarchy roleHierarchy() {
-      RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
-      roleHierarchy.setHierarchy("ROLE_ADMIN > ROLE_USER");
-      return roleHierarchy;
+        RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
+        roleHierarchy.setHierarchy("ROLE_ADMIN > ROLE_USER");
+        return roleHierarchy;
     }
 
     @Bean
@@ -124,13 +124,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //		http.logout().logoutUrl("/system/logout").logoutSuccessUrl("/system/login").invalidateHttpSession(true)
 //			.deleteCookies("JSESSIONID").permitAll()
 //			.logoutSuccessHandler(logoutHandler())
-            ;
+        ;
         http.authorizeRequests().anyRequest().authenticated()
-        .and()
-            .formLogin().loginPage(loginUrl)
-            .loginProcessingUrl("/system/processlogin")
-        .and()
-            .csrf().disable();
+                .and()
+                .formLogin().loginPage(loginUrl)
+                .loginProcessingUrl("/system/processlogin")
+                .and()
+                .csrf().disable();
     }
 
 }

@@ -70,7 +70,8 @@ public class TableDmlProvider {
     }
 
     public boolean hasValue(Object o) {
-        if (o == null) return false;
+        if (o == null)
+            return false;
         return true;
     }
 

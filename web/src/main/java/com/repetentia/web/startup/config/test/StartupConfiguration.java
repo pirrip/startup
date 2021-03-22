@@ -15,8 +15,8 @@ import lombok.extern.slf4j.Slf4j;
 @Profile("test")
 //@Import({ LoggingFilterConfig.class})
 public class StartupConfiguration {
-	public StartupConfiguration(Environment env) {
-		String [] profiles = env.getActiveProfiles();
-		log.info(Marker.CONFIG, "# test - {}", Arrays.toString(profiles));
-	}
+    public StartupConfiguration(Environment env) {
+        String[] profiles = env.getActiveProfiles();
+        log.info(Marker.CONFIG, "# test - {}", Arrays.toString(profiles));
+    }
 }

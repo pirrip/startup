@@ -10,7 +10,6 @@ import org.apache.ibatis.type.JdbcType;
 
 import com.repetentia.component.code.RtaEnumType;
 
-
 public class RtaEnumTypeHandler<E extends RtaEnumType> extends BaseTypeHandler<RtaEnumType> {
     private final Class<E> type;
 
@@ -34,22 +33,24 @@ public class RtaEnumTypeHandler<E extends RtaEnumType> extends BaseTypeHandler<R
 
     @Override
     public RtaEnumType getNullableResult(ResultSet rs, String columnName) throws SQLException {
-      String s = rs.getString(columnName);
-      E [] es = type.getEnumConstants();
-      for (E e: es) {
-          RtaEnumType r = (RtaEnumType)e;
-          if (r.code().equals(s)) return e;
-      }
-      return null;
+        String s = rs.getString(columnName);
+        E[] es = type.getEnumConstants();
+        for (E e : es) {
+            RtaEnumType r = (RtaEnumType) e;
+            if (r.code().equals(s))
+                return e;
+        }
+        return null;
     }
 
     @Override
     public RtaEnumType getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
         String s = rs.getString(columnIndex);
-        E [] es = type.getEnumConstants();
-        for (E e: es) {
-            RtaEnumType r = (RtaEnumType)e;
-            if (r.code().equals(s)) return e;
+        E[] es = type.getEnumConstants();
+        for (E e : es) {
+            RtaEnumType r = (RtaEnumType) e;
+            if (r.code().equals(s))
+                return e;
         }
         return null;
     }
@@ -57,10 +58,11 @@ public class RtaEnumTypeHandler<E extends RtaEnumType> extends BaseTypeHandler<R
     @Override
     public RtaEnumType getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
         String s = cs.getString(columnIndex);
-        E [] es = type.getEnumConstants();
-        for (E e: es) {
-            RtaEnumType r = (RtaEnumType)e;
-            if (r.code().equals(s)) return e;
+        E[] es = type.getEnumConstants();
+        for (E e : es) {
+            RtaEnumType r = (RtaEnumType) e;
+            if (r.code().equals(s))
+                return e;
         }
         return null;
     }

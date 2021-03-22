@@ -34,7 +34,7 @@ public class DatabaseSecurityMetadataSource implements FilterInvocationSecurityM
         HttpServletRequest request = fi.getRequest();
 
         Set<Entry<RequestMatcher, List<ConfigAttribute>>> entrySet = requestMap.entrySet();
-        for (Entry<RequestMatcher, List<ConfigAttribute>> entry:entrySet) {
+        for (Entry<RequestMatcher, List<ConfigAttribute>> entry : entrySet) {
             RequestMatcher requestMatcher = entry.getKey();
             if (requestMatcher.matches(request)) {
                 List<ConfigAttribute> list = entry.getValue();

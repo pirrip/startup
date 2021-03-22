@@ -28,34 +28,34 @@ import liquibase.structure.core.UniqueConstraint;
 import liquibase.structure.core.View;
 
 public class LiquiBaseChangeLogGenerator {
-	private final Logger log = org.slf4j.LoggerFactory.getLogger(getClass());
+    private final Logger log = org.slf4j.LoggerFactory.getLogger(getClass());
 
-	private DataSource dataSource;
-	private String pathMaster;
-	private String pathChangelog;
-	private String catalog;
-	private String schema;
-	
-	public void setDataSource(DataSource dataSource) {
-		this.dataSource = dataSource;
-	}
+    private DataSource dataSource;
+    private String pathMaster;
+    private String pathChangelog;
+    private String catalog;
+    private String schema;
 
-	public LiquiBaseChangeLogGenerator(Environment env) {
-		// pathMaster - classpath:config/liquibase/master.xml
-		// pathChangelog - d:/change-logs.xml
-		// schema - rtadb
-		this.pathMaster = env.getProperty("liquibase.path.master");
-		this.pathChangelog = env.getProperty("liquibase.path.changelog");
-		this.catalog = env.getProperty("liquibase.catalog");
-		this.schema = env.getProperty("liquibase.schema");
-		log.info("# liquibase master file path : {}", pathMaster);
-		log.info("# liquibase generated change-log path : {}", pathChangelog);
-		log.info("# liquibase catalog : {} & schema : {}", catalog, schema);
-	}
+    public void setDataSource(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 
-	@SuppressWarnings("unchecked")
-	public boolean generateChangeLog() throws Exception {
-    	Connection connection = dataSource.getConnection();
+    public LiquiBaseChangeLogGenerator(Environment env) {
+        // pathMaster - classpath:config/liquibase/master.xml
+        // pathChangelog - d:/change-logs.xml
+        // schema - rtadb
+        this.pathMaster = env.getProperty("liquibase.path.master");
+        this.pathChangelog = env.getProperty("liquibase.path.changelog");
+        this.catalog = env.getProperty("liquibase.catalog");
+        this.schema = env.getProperty("liquibase.schema");
+        log.info("# liquibase master file path : {}", pathMaster);
+        log.info("# liquibase generated change-log path : {}", pathChangelog);
+        log.info("# liquibase catalog : {} & schema : {}", catalog, schema);
+    }
+
+    @SuppressWarnings("unchecked")
+    public boolean generateChangeLog() throws Exception {
+        Connection connection = dataSource.getConnection();
         Database database = DatabaseFactory.getInstance().findCorrectDatabaseImplementation(new JdbcConnection(connection));
         Liquibase liquibase = new Liquibase(pathMaster, new ClassLoaderResourceAccessor(), database);
 
@@ -65,11 +65,11 @@ public class LiquiBaseChangeLogGenerator {
         liquibase.generateChangeLog(catalogAndSchema, changeLog, new PrintStream(new FileOutputStream(pathChangelog)), new XMLChangeLogSerializer(), snapTypes());
         liquibase.close();
 
-    	return true;
+        return true;
     }
 
     @SuppressWarnings("rawtypes")
-	private static Class[] snapTypes() {
-        return new Class[]{UniqueConstraint.class, Sequence.class, Table.class, View.class, ForeignKey.class, PrimaryKey.class, Index.class, Column.class};
+    private static Class[] snapTypes() {
+        return new Class[] { UniqueConstraint.class, Sequence.class, Table.class, View.class, ForeignKey.class, PrimaryKey.class, Index.class, Column.class };
     }
 }

@@ -22,4 +22,4 @@ public class EnumNameDeserializer extends StdDeserializer<UrlSe> {
         return null;
     }
 
- }
+}

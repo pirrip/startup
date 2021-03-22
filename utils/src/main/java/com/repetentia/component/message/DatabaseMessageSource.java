@@ -7,17 +7,17 @@ import javax.persistence.Table;
 import lombok.Data;
 
 @Data
-@Table(name="st_message_source")
+@Table(name = "st_message_source")
 public class DatabaseMessageSource {
     @Id
-    @Column(name="page")
+    @Column(name = "page")
     private String page;
     @Id
-    @Column(name="locale")
+    @Column(name = "locale")
     private String locale;
     @Id
-    @Column(name="code")
+    @Column(name = "code")
     private String code;
-    @Column(name="message")
+    @Column(name = "message")
     private String message;
 }

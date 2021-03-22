@@ -10,10 +10,10 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 public class AdminLteSampleController {
 
-	@RequestMapping("/lte/sample")
-	public ModelAndView page(ModelAndView mav) {
-		log.info("/lte/sample");
-		mav.setViewName("lte/sample");
-		return mav;
-	}
+    @RequestMapping("/lte/sample")
+    public ModelAndView page(ModelAndView mav) {
+        log.info("/lte/sample");
+        mav.setViewName("lte/sample");
+        return mav;
+    }
 }

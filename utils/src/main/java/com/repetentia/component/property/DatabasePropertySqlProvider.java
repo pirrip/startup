@@ -9,9 +9,9 @@ import org.apache.ibatis.jdbc.SQL;
 
 import com.repetentia.support.sql.SqlProviderUtils;
 
-
 public class DatabasePropertySqlProvider {
     private static final Class<DatabaseProperty> clazz = DatabaseProperty.class;
+
     public String findAll(DatabaseProperty condition) {
         SQL sql = new SQL();
         String table = SqlProviderUtils.table(clazz);
@@ -25,23 +25,23 @@ public class DatabasePropertySqlProvider {
         String query = sql.toString();
         return query;
     }
-    
+
     public String findSe() {
         SQL sql = new SQL();
         String table = SqlProviderUtils.table(clazz);
         sql.SELECT_DISTINCT(distinct());
         sql.FROM(table);
-        return sql.toString();    	
+        return sql.toString();
     }
-    
+
     private String distinct() {
-    	StringBuilder sb = new StringBuilder();
-    	String se = SqlProviderUtils.columnByField("se", clazz);
-    	sb.append(se);
-    	sb.append(" as se");
-    	return sb.toString();
+        StringBuilder sb = new StringBuilder();
+        String se = SqlProviderUtils.columnByField("se", clazz);
+        sb.append(se);
+        sb.append(" as se");
+        return sb.toString();
     }
-    
+
     public String update(DatabaseProperty gripPropertySource) {
         SQL sql = new SQL();
         String table = SqlProviderUtils.table(clazz);
@@ -50,21 +50,21 @@ public class DatabasePropertySqlProvider {
         sql.UPDATE(table);
         sql.SET(sets.toArray(new String[sets.size()]));
         sql.WHERE(conditions.toArray(new String[conditions.size()]));
-        return sql.toString();    		
+        return sql.toString();
     }
-    
+
     public String insert(DatabaseProperty gripPropertySource) {
         SQL sql = new SQL();
         String table = SqlProviderUtils.table(clazz);
         Map<String, String> columns = SqlProviderUtils.insertColumns(clazz);
         sql.INSERT_INTO(table);
         Set<Entry<String, String>> set = columns.entrySet();
-        for (Entry<String, String> entry:set) {
-        	sql.VALUES(entry.getKey(), String.format("#{%s}", entry.getValue()));	
+        for (Entry<String, String> entry : set) {
+            sql.VALUES(entry.getKey(), String.format("#{%s}", entry.getValue()));
         }
         return sql.toString();
     }
-    
+
     public String delete(DatabaseProperty gripPropertySource) {
         SQL sql = new SQL();
         String table = SqlProviderUtils.table(clazz);

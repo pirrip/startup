@@ -12,13 +12,12 @@ public class ImmutableTest extends Thread {
     }
 
     @Override
-    public void run(){
+    public void run() {
         value += " world";
         System.out.println(value);
     }
+
     public static void main(String[] args) {
 
     }
 }
-
-
