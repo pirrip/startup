@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import lombok.Data;
 
 @Data
-public class UserAuthsUrl {
+public class UserMenuAuth {
     @Id
     @Column(name = "sqno")
     private int sqno;

@@ -93,4 +93,69 @@
             <column name="property_value" remarks="값" type="VARCHAR(255)"/>
         </createTable>
     </changeSet>
+    <changeSet context="prod" author="rta" id="00000006">
+          <comment>USER DETAILS</comment>
+        <createTable tableName="usr_details">
+            <column name="uid" remarks="사용자아이디" type="VARCHAR(255)">
+                 <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="pwd" remarks="패스워드" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="accountNonExpired" remarks="계정만료여부" type="CHAR(1)"  defaultValue="F"/>
+            <column name="accountNonLocked" remarks="계정잠금여부" type="CHAR(1)"  defaultValue="F"/>
+            <column name="credentialsNonExpired" remarks="패스워드만료여부" type="CHAR(1)"  defaultValue="F"/>
+            <column name="enabled" remarks="계정활성화여부" type="CHAR(1)"  defaultValue="F"/>
+            <column name="name" remarks="사용자이름" type="VARCHAR(255)"/>
+            <column name="alias" remarks="별칭" type="VARCHAR(255)"/>
+            <column name="email" remarks="이메일" type="VARCHAR(255)"/>
+            <column name="mobile" remarks="휴대폰전화번호" type="VARCHAR(255)"/>
+            <column name="usergroup" remarks="사용자그룹" type="VARCHAR(255)"/>
+            <column name="crdt" remarks="생성일" type="DATETIME"/>
+            <column name="crid" remarks="생성자" type="VARCHAR(255)"/>
+            <column name="updt" remarks="수정일" type="DATETIME"/>
+            <column name="upid" remarks="수정자" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet context="prod" author="rta" id="00000007">
+          <comment>USER GROUP</comment>
+        <createTable tableName="usr_group">
+            <column name="usergroup" remarks="사용자그룹" type="VARCHAR(255)">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="usergroupNm" remarks="사용자그룹명" type="VARCHAR(255)"/>
+            <column name="usergroupDesc" remarks="사용자그룹상세" type="TEXT"/>
+            <column name="enabled" remarks="활성화여부" type="CHAR(1)"  defaultValue="F"/>
+            <column name="name" remarks="사용자이름" type="VARCHAR(255)"/>
+            <column name="crdt" remarks="생성일" type="DATETIME"/>
+            <column name="crid" remarks="생성자" type="VARCHAR(255)"/>
+            <column name="updt" remarks="수정일" type="DATETIME"/>
+            <column name="upid" remarks="수정자" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet context="prod" author="rta" id="00000008">
+          <comment>USER AUTHS URL(MENU)</comment>
+        <createTable tableName="usr_menu_auth">
+            <column autoIncrement="true" name="sqno" remarks="메뉴 아이디(연번)" type="INT UNSIGNED">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="pqno" remarks="부모 메뉴 아이디" type="INT UNSIGNED"/>
+            <column name="depth" remarks="메뉴 깊이" type="INT UNSIGNED"/>
+            <column name="site" remarks="사이트" type="VARCHAR(255)"/>
+            <column name="menu_se" remarks="메뉴구분" type="VARCHAR(255)"/>
+            <column name="url" remarks="URL" type="VARCHAR(255)"/>
+            <column name="method" remarks="HTTP METHOD" type="VARCHAR(255)"/>
+            <column name="crdt" remarks="생성일" type="DATETIME"/>
+            <column name="crid" remarks="생성자" type="VARCHAR(255)"/>
+            <column name="updt" remarks="수정일" type="DATETIME"/>
+            <column name="upid" remarks="수정자" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet context="prod" author="rta" id="00000009">
+          <comment>USER usr_group to usr_menu_auth mapping</comment>
+        <createTable tableName="usr_group_auth">
+            <column name="usergroup" remarks="사용자그룹" type="VARCHAR(255)"/>
+            <column name="sqno" remarks="메뉴 아이디" type="INT UNSIGNED"/>
+        </createTable>
+    </changeSet>
 </databaseChangeLog>

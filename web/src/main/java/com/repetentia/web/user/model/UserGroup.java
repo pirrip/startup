@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import lombok.Data;
 
 @Data
-public class UserGroups {
+public class UserGroup {
     @Id
     @Column(name = "usergroup")
     private String usergroup;
