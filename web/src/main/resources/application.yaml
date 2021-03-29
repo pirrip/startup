@@ -2,11 +2,11 @@ spring:
 # DATASOURCE
   datasource:
     driverClassName: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://nas.repetentia.com:33306/rtadb
+    url: jdbc:mariadb://localhost:3306/rtadb
     username: RTAUSER
-    password: R2P2T2NT1@
+    password: fantas1@
     hikari:
-      maximum-pool-size: 1
+      maximum-pool-size: 5
   mvc:
     view:
       prefix: /WEB-INF/views/

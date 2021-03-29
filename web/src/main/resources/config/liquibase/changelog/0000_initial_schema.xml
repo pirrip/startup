@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.10.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.10.xsd">
     <changeSet context="prod" author="rta" id="00000001" labels="">
-    	<comment>파일 DB 보관용</comment>
+         <comment>파일 DB 보관용</comment>
         <createTable tableName="file_holder">
             <column name="filename" remarks="파일명" type="VARCHAR(255)">
                 <constraints nullable="false" primaryKey="true"/>
@@ -10,7 +10,7 @@
         </createTable>
     </changeSet>
     <changeSet context="prod" author="rta" id="00000002">
-    	<comment>파일 일반정보 </comment>
+         <comment>파일 일반정보 </comment>
         <createTable tableName="file_info">
             <column name="filename" remarks="파일명" type="VARCHAR(255)">
                 <constraints nullable="false" primaryKey="true"/>
@@ -26,7 +26,7 @@
         </createTable>
     </changeSet>
     <changeSet context="prod" author="rta" id="00000003">
-    	<comment>파일상세정보</comment>
+         <comment>파일상세정보</comment>
         <createTable tableName="file_meta">
             <column name="filename" remarks="파일명" type="VARCHAR(255)">
                 <constraints nullable="false" primaryKey="true"/>
@@ -59,8 +59,8 @@
         </createTable>
     </changeSet>
     <changeSet context="prod" author="rta" id="00000004">
-    	<comment>DB 메시지소스</comment>
-        <createTable tableName="message_source">
+         <comment>DB 메시지소스</comment>
+        <createTable tableName="st_message_source">
             <column name="page" remarks="페이지" type="VARCHAR(255)">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
@@ -76,8 +76,8 @@
         </createTable>
     </changeSet>
     <changeSet context="prod" author="rta" id="00000005">
-		<comment>DB Properties</comment>    
-        <createTable tableName="property_source">
+          <comment>DB Properties</comment>
+        <createTable tableName="st_property_source">
             <column autoIncrement="true" name="pid" remarks="프로퍼티아이디" type="INT UNSIGNED">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
