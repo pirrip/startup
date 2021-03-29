@@ -59,7 +59,7 @@
         </createTable>
     </changeSet>
     <changeSet context="prod" author="rta" id="00000004">
-         <comment>DB 메시지소스</comment>
+        <comment>DB 메시지소스</comment>
         <createTable tableName="st_message_source">
             <column name="page" remarks="페이지" type="VARCHAR(255)">
                 <constraints nullable="false" primaryKey="true"/>
@@ -76,7 +76,7 @@
         </createTable>
     </changeSet>
     <changeSet context="prod" author="rta" id="00000005">
-          <comment>DB Properties</comment>
+        <comment>DB Properties</comment>
         <createTable tableName="st_property_source">
             <column autoIncrement="true" name="pid" remarks="프로퍼티아이디" type="INT UNSIGNED">
                 <constraints nullable="false" primaryKey="true"/>
@@ -94,7 +94,7 @@
         </createTable>
     </changeSet>
     <changeSet context="prod" author="rta" id="00000006">
-          <comment>USER DETAILS</comment>
+        <comment>USER DETAILS</comment>
         <createTable tableName="usr_details">
             <column name="uid" remarks="사용자아이디" type="VARCHAR(255)">
                  <constraints nullable="false" primaryKey="true"/>
@@ -102,9 +102,9 @@
             <column name="pwd" remarks="패스워드" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="accountNonExpired" remarks="계정만료여부" type="CHAR(1)"  defaultValue="F"/>
-            <column name="accountNonLocked" remarks="계정잠금여부" type="CHAR(1)"  defaultValue="F"/>
-            <column name="credentialsNonExpired" remarks="패스워드만료여부" type="CHAR(1)"  defaultValue="F"/>
+            <column name="account_non_expired" remarks="계정만료여부" type="CHAR(1)"  defaultValue="F"/>
+            <column name="account_non_locked" remarks="계정잠금여부" type="CHAR(1)"  defaultValue="F"/>
+            <column name="credentials_non_expired" remarks="패스워드만료여부" type="CHAR(1)"  defaultValue="F"/>
             <column name="enabled" remarks="계정활성화여부" type="CHAR(1)"  defaultValue="F"/>
             <column name="name" remarks="사용자이름" type="VARCHAR(255)"/>
             <column name="alias" remarks="별칭" type="VARCHAR(255)"/>
@@ -118,13 +118,13 @@
         </createTable>
     </changeSet>
     <changeSet context="prod" author="rta" id="00000007">
-          <comment>USER GROUP</comment>
+        <comment>USER GROUP</comment>
         <createTable tableName="usr_group">
             <column name="usergroup" remarks="사용자그룹" type="VARCHAR(255)">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
-            <column name="usergroupNm" remarks="사용자그룹명" type="VARCHAR(255)"/>
-            <column name="usergroupDesc" remarks="사용자그룹상세" type="TEXT"/>
+            <column name="usergroup_nm" remarks="사용자그룹명" type="VARCHAR(255)"/>
+            <column name="usergroup_desc" remarks="사용자그룹상세" type="TEXT"/>
             <column name="enabled" remarks="활성화여부" type="CHAR(1)"  defaultValue="F"/>
             <column name="name" remarks="사용자이름" type="VARCHAR(255)"/>
             <column name="crdt" remarks="생성일" type="DATETIME"/>
@@ -134,7 +134,7 @@
         </createTable>
     </changeSet>
     <changeSet context="prod" author="rta" id="00000008">
-          <comment>USER AUTHS URL(MENU)</comment>
+        <comment>USER AUTHS URL(MENU)</comment>
         <createTable tableName="usr_menu_auth">
             <column autoIncrement="true" name="sqno" remarks="메뉴 아이디(연번)" type="INT UNSIGNED">
                 <constraints nullable="false" primaryKey="true"/>
@@ -143,8 +143,10 @@
             <column name="depth" remarks="메뉴 깊이" type="INT UNSIGNED"/>
             <column name="site" remarks="사이트" type="VARCHAR(255)"/>
             <column name="menu_se" remarks="메뉴구분" type="VARCHAR(255)"/>
-            <column name="url" remarks="URL" type="VARCHAR(255)"/>
+            <column name="menu_nm" remarks="메뉴명" type="VARCHAR(255)"/>
             <column name="method" remarks="HTTP METHOD" type="VARCHAR(255)"/>
+            <column name="url" remarks="URL" type="VARCHAR(255)"/>
+            <column name="auth" remarks="스프링 시큐리티 ROLE" type="VARCHAR(255)"/>
             <column name="crdt" remarks="생성일" type="DATETIME"/>
             <column name="crid" remarks="생성자" type="VARCHAR(255)"/>
             <column name="updt" remarks="수정일" type="DATETIME"/>

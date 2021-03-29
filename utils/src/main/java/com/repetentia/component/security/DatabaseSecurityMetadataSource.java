@@ -9,16 +9,13 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
-import lombok.extern.slf4j.Slf4j;
-
-public class DatabaseSecurityMetadataSource implements FilterInvocationSecurityMetadataSource, InitializingBean {
+public class DatabaseSecurityMetadataSource implements FilterInvocationSecurityMetadataSource {
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger("[# AUTHORIZING #]");
     private UrlSecuritySource urlSecuritySource;
     private Map<RequestMatcher, List<ConfigAttribute>> requestMap;
@@ -30,6 +27,7 @@ public class DatabaseSecurityMetadataSource implements FilterInvocationSecurityM
 
     @Override
     public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
+        if (this.requestMap == null) loadRequestMap();
         FilterInvocation fi = (FilterInvocation) object;
         HttpServletRequest request = fi.getRequest();
 
@@ -42,8 +40,9 @@ public class DatabaseSecurityMetadataSource implements FilterInvocationSecurityM
                 return list;
             }
         }
-
+        log.info("# AUTH ROLE_ANONYMOUS FOR URL [{}] uid is [{}]", fi.getRequestUrl(), getUID(request));
         return SecurityConfig.createList("ROLE_ANONYMOUS");
+//        return null;
     }
 
     private String getUID(HttpServletRequest request) {
@@ -65,8 +64,7 @@ public class DatabaseSecurityMetadataSource implements FilterInvocationSecurityM
         return FilterInvocation.class.isAssignableFrom(clazz);
     }
 
-    @Override
-    public void afterPropertiesSet() throws Exception {
+    public void loadRequestMap() {
         this.requestMap = this.urlSecuritySource.loadUrlSecuritySource();
     }
 

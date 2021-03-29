@@ -21,22 +21,15 @@ public class RtaUserDetailsService implements UserDetailsService {
 
     public RtaUserDetailsService(SqlSession sqlSession) {
         this.sqlSession = sqlSession;
+        log.info("---------- REGISTERING RtaUserDetailsMapper");
+        sqlSession.getConfiguration().addMapper(RtaUserDetailsMapper.class);
     }
 
     @Override
     public RtaUserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         log.info("USER DETAILS - {}", username);
-        RtaUserDetails userDetails = null;
-        try {
-            userDetails = sqlSession.getMapper(RtaUserDetailsMapper.class).find(username);
-        } catch (BindingException e) {
-            log.info("REGISTERING RtaUserDetailsMapper to MyBatis !!!");
-            sqlSession.getConfiguration().addMapper(RtaUserDetailsMapper.class);
-            loadUserByUsername(username);
-        }
-
-        if (userDetails == null)
-            throw new UsernameNotFoundException(String.format("%s not in database", username));
+        RtaUserDetails userDetails = sqlSession.getMapper(RtaUserDetailsMapper.class).find(username);
+        if (userDetails == null) throw new UsernameNotFoundException(String.format("%s not in database", username));
         List<GrantedAuthority> list = new ArrayList<GrantedAuthority>();
         list.add(new SimpleGrantedAuthority("ROLE_USER"));
         userDetails.setAuthorities(list);
@@ -49,7 +42,7 @@ public class RtaUserDetailsService implements UserDetailsService {
                 "   uid as username, pwd as password, name, alias, email, mobile, usergroup,",
                 "   account_non_expired, account_non_locked, credentials_non_expired, enabled,",
                 "   crdt, crid, updt, upid ",
-                "  FROM user_details ",
+                "  FROM usr_details ",
                 " WHERE uid = #{uid}"
         })
         RtaUserDetails find(String uid);

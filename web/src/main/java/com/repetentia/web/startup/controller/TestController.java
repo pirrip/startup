@@ -24,8 +24,6 @@ public class TestController {
     TestService testService;
     @Autowired
     FileUploadService fileUploadService;
-    @Autowired
-    LiquiBaseChangeLogGenerator liquiBaseChangeLogGenerator;
 
     @GetMapping("/test")
     public ModelAndView test(ModelAndView mav, HttpServletRequest request) {
@@ -46,15 +44,6 @@ public class TestController {
         log.info("# file : {}", files);
         fileUploadService.upload(files);
         log.info("# change : {}", files);
-    }
-
-    @GetMapping("/lb")
-    public String lb() throws Exception {
-        if (liquiBaseChangeLogGenerator.generateChangeLog()) {
-            return "OK";
-        } else {
-            return "NOT OK";
-        }
     }
 
 }

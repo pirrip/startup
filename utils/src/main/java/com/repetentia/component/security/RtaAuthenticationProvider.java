@@ -29,6 +29,7 @@ public class RtaAuthenticationProvider extends AbstractUserDetailsAuthentication
             throws AuthenticationException {
         log.info("# CUSTOM AUTH - {}", username);
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+        log.info("# USER DETAILS - {}", userDetails);
         return userDetails;
     }
 

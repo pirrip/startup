@@ -29,6 +29,7 @@ public class UrlSecuritySource {
         List<UrlSecurity> urlSecurities = sqlSession.getMapper(UrlSecurityMapper.class).findAll();
 
         for (UrlSecurity urlSecurity : urlSecurities) {
+            if (urlSecurity == null) continue;
             if (UrlSe.P.equals(urlSecurity.getMenuSe()) || UrlSe.S.equals(urlSecurity.getMenuSe())) {
                 String pattern = String.format("%s%s", urlSecurity.getUrl(), "**");
                 HttpMethod httpMethod = urlSecurity.getMethod();
@@ -71,7 +72,7 @@ public class UrlSecuritySource {
     }
 
     interface UrlSecurityMapper {
-        @Select({ "SELECT sqno, pqno, depth, site, menu_se, menu_nm, url, method, auth, crdt, crid, updt, upid FROM user_auths_url" })
+        @Select({ "SELECT sqno, pqno, depth, site, menu_se, menu_nm, url, method, auth, crdt, crid, updt, upid FROM usr_menu_auth" })
         List<UrlSecurity> findAll();
     }
 }

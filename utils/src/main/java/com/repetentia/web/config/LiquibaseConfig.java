@@ -5,6 +5,7 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.PriorityOrdered;
 import org.springframework.core.env.Environment;
 
 import com.repetentia.component.liquibase.LiquiBaseChangeLogGenerator;
@@ -15,7 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Configuration
-public class LiquibaseConfig {
+public class LiquibaseConfig implements PriorityOrdered {
 
     @Autowired
     Environment env;
@@ -45,6 +46,12 @@ public class LiquibaseConfig {
     @Bean
     public LiquiBaseChangeLogGenerator liquiBaseChangeLogGenerator() {
         LiquiBaseChangeLogGenerator liquiBaseChangeLogGenerator = new LiquiBaseChangeLogGenerator(env);
+        liquiBaseChangeLogGenerator.setDataSource(dataSource);
         return liquiBaseChangeLogGenerator;
+    }
+
+    @Override
+    public int getOrder() {
+        return 0;
     }
 }

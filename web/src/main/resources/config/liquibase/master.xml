@@ -11,4 +11,5 @@
     <property name="uuidType" value="varchar(36)" dbms="h2, mysql, mariadb"/>
 
     <include file="config/liquibase/changelog/0000_initial_schema.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/data-change-logs.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>

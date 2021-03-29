@@ -26,7 +26,7 @@ public class AjaxAuthenticationEntryPoint extends LoginUrlAuthenticationEntryPoi
         log.info("# {} - AJAX ENTRY POINT - {}", request.getRequestURI(), authException.getMessage());
 
         String accept = ((HttpServletRequest) request).getHeader(HttpHeaders.ACCEPT);
-        log.trace("# HTTP HEADER FOR AJAX REQUEST - Accept: {}", accept);
+        log.info("# HTTP HEADER FOR AJAX REQUEST - Accept: {}", accept);
         if (accept != null && accept.indexOf(MimeTypeUtils.APPLICATION_JSON_VALUE) > -1) {
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "NOT AUTHENTICATED (May Be Session Expired)");
         } else {

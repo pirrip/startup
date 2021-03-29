@@ -1,23 +1,34 @@
-//package com.repetentia.component.security.jwt;
-//
-//import javax.servlet.http.HttpServletRequest;
-//
-//import org.springframework.beans.factory.annotation.Value;
-//import org.springframework.security.core.userdetails.UserDetailsService;
-//
-//public class JwtTokenProvider {
-//    private final long TOKEN_VALID_MILISECOND = 1000L * 60 * 60 * 10; // 10시간
-//
-//    private String secretKey;
-//
-//    private final UserDetailsService userDetailsService;
-//
-//    public JwtTokenProvider(UserDetailsService userDetailsService) {
-//        this.userDetailsService = userDetailsService;
-//    }
-//
-//
-//    // Jwt 토큰 생성
+package com.repetentia.component.security.jwt;
+
+import java.util.Date;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+
+public class JwtTokenProvider {
+    private final long TOKEN_VALID_MILISECOND = 1000L * 60 * 60 * 10; // 10시간
+
+    private String secretKey;
+
+    private final UserDetailsService userDetailsService;
+
+    public JwtTokenProvider(UserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
+    }
+
+
+    // Jwt 토큰 생성
 //    public String createToken(String userPk, List<UserRole> roles) {
 //        Claims claims = Jwts.claims().setSubject(userPk);
 //        claims.put("roles", roles);
@@ -29,30 +40,30 @@
 //                .signWith(SignatureAlgorithm.HS512, secretKey) // 암호화 알고리즘, secret 값
 //                .compact(); // Token 생성
 //    }
-//
-//    // 인증 성공시 SecurityContextHolder에 저장할 Authentication 객체 생성
-//    public Authentication getAuthentication(String token) {
-//        UserDetails userDetails = userDetailsService.loadUserByUsername(this.getUserPk(token));
-//        return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
-//    }
-//
-//    // Jwt Token에서 User PK 추출
-//    public String getUserPk(String token) {
-//        return Jwts.parser().setSigningKey(secretKey)
-//                .parseClaimsJws(token).getBody().getSubject();
-//    }
-//
-//    public String resolveToken(HttpServletRequest req) {
-//        return req.getHeader("X-AUTH-TOKEN");
-//    }
-//
-//    // Jwt Token의 유효성 및 만료 기간 검사
-//    public boolean validateToken(String jwtToken) {
-//        try {
-//            Jwts<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(jwtToken);
-//            return !claims.getBody().getExpiration().before(new Date());
-//        } catch (Exception e) {
-//            return false;
-//        }
-//    }
-//}
+
+    // 인증 성공시 SecurityContextHolder에 저장할 Authentication 객체 생성
+    public Authentication getAuthentication(String token) {
+        UserDetails userDetails = userDetailsService.loadUserByUsername(this.getUserPk(token));
+        return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
+    }
+
+    // Jwt Token에서 User PK 추출
+    public String getUserPk(String token) {
+        return Jwts.parser().setSigningKey(secretKey)
+                .parseClaimsJws(token).getBody().getSubject();
+    }
+
+    public String resolveToken(HttpServletRequest req) {
+        return req.getHeader("X-AUTH-TOKEN");
+    }
+
+    // Jwt Token의 유효성 및 만료 기간 검사
+    public boolean validateToken(String jwtToken) {
+        try {
+            Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(jwtToken);
+            return !claims.getBody().getExpiration().before(new Date());
+        } catch (Exception e) {
+            return false;
+        }
+    }
+}

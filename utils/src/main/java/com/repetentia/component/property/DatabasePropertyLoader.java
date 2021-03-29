@@ -9,6 +9,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import javax.sql.DataSource;
+import javax.transaction.Transactional;
 
 import org.apache.ibatis.exceptions.PersistenceException;
 import org.apache.ibatis.mapping.Environment;
@@ -68,9 +69,10 @@ public class DatabasePropertyLoader {
         return list;
     }
 
+    @Transactional
     public void loadDataBasePropertySource() {
         try {
-            Map<String, Object> sourceMap = listToSourceMap();
+            Map<String, Object> sourceMap = dbTableListToSourceMap();
             MutablePropertySources mps = this.env.getPropertySources();
             PropertySource<Map<String, Object>> propertySource = new DatabasePropertySource(RTA_PROPERTY_SOURCE, sourceMap);
             mps.addFirst(propertySource);
@@ -80,7 +82,7 @@ public class DatabasePropertyLoader {
     }
 
     public void reload() {
-        Map<String, Object> sourceMap = listToSourceMap();
+        Map<String, Object> sourceMap = dbTableListToSourceMap();
         MutablePropertySources mps = this.env.getPropertySources();
         PropertySource<?> propertySource = mps.get(RTA_PROPERTY_SOURCE);
         @SuppressWarnings("unchecked")
@@ -104,7 +106,7 @@ public class DatabasePropertyLoader {
         return list;
     }
 
-    public Map<String, Object> listToSourceMap() {
+    public Map<String, Object> dbTableListToSourceMap() {
         DataSource dataSource = jndiDataSource();
         if (dataSource == null) {
             throw new RuntimeException("No JNDI");

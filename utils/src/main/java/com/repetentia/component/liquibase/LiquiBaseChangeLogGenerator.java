@@ -19,6 +19,7 @@ import liquibase.diff.output.changelog.DiffToChangeLog;
 import liquibase.resource.ClassLoaderResourceAccessor;
 import liquibase.serializer.core.xml.XMLChangeLogSerializer;
 import liquibase.structure.core.Column;
+import liquibase.structure.core.Data;
 import liquibase.structure.core.ForeignKey;
 import liquibase.structure.core.Index;
 import liquibase.structure.core.PrimaryKey;
@@ -35,6 +36,7 @@ public class LiquiBaseChangeLogGenerator {
     private String pathChangelog;
     private String catalog;
     private String schema;
+
 
     public void setDataSource(DataSource dataSource) {
         this.dataSource = dataSource;
@@ -54,7 +56,7 @@ public class LiquiBaseChangeLogGenerator {
     }
 
     @SuppressWarnings("unchecked")
-    public boolean generateChangeLog() throws Exception {
+    public boolean generateChangeLog(String type) throws Exception {
         Connection connection = dataSource.getConnection();
         Database database = DatabaseFactory.getInstance().findCorrectDatabaseImplementation(new JdbcConnection(connection));
         Liquibase liquibase = new Liquibase(pathMaster, new ClassLoaderResourceAccessor(), database);
@@ -62,14 +64,29 @@ public class LiquiBaseChangeLogGenerator {
         CatalogAndSchema catalogAndSchema = new CatalogAndSchema(catalog, schema);
         DiffToChangeLog changeLog = new DiffToChangeLog(new DiffOutputControl(false, false, true, null));
 
-        liquibase.generateChangeLog(catalogAndSchema, changeLog, new PrintStream(new FileOutputStream(pathChangelog)), new XMLChangeLogSerializer(), snapTypes());
-        liquibase.close();
 
+        liquibase.generateChangeLog(catalogAndSchema, changeLog, new PrintStream(new FileOutputStream(pathChangelog)), new XMLChangeLogSerializer(), snapTypes(type));
+        liquibase.close();
         return true;
     }
 
     @SuppressWarnings("rawtypes")
-    private static Class[] snapTypes() {
+    private static Class[] snapTypes(String type) {
+        if ("data".equals(type)) {
+            return dataTypes();
+        } else {
+            return schemaTypes();
+        }
+
+    }
+
+    @SuppressWarnings("rawtypes")
+    private static Class[] schemaTypes() {
         return new Class[] { UniqueConstraint.class, Sequence.class, Table.class, View.class, ForeignKey.class, PrimaryKey.class, Index.class, Column.class };
+    }
+
+    @SuppressWarnings("rawtypes")
+    private static Class[] dataTypes() {
+        return new Class[] { Data.class };
     }
 }

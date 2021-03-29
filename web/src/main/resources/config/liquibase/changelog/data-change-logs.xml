@@ -1,0 +1,40 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.10.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.10.xsd">
+    <changeSet author="user (generated)" id="10">
+           <comment>사용자정보 데이터(usr_details)</comment>
+        <insert tableName="usr_details">
+            <column name="uid" value="pirrip"/>
+            <column name="pwd" value="test"/>
+            <column name="account_non_expired" value="T"/>
+            <column name="account_non_locked" value="T"/>
+            <column name="credentials_non_expired" value="T"/>
+            <column name="enabled" value="T"/>
+            <column name="name" value="JJ"/>
+            <column name="alias" value="JJ"/>
+            <column name="email" value="pirrip@naver.com"/>
+            <column name="mobile" value="010"/>
+            <column name="usergroup" value="super"/>
+            <column name="crdt" valueDate="2021-03-29T10:57:52"/>
+            <column name="crid" value="system"/>
+            <column name="updt" valueDate="2021-03-29T10:58:05"/>
+            <column name="upid" value="system"/>
+        </insert>
+    </changeSet>
+    <changeSet author="user (generated)" id="1617003071160-4">
+        <insert tableName="usr_menu_auth">
+            <column name="sqno" valueNumeric="1"/>
+            <column name="pqno" valueNumeric="1"/>
+            <column name="depth" valueNumeric="1"/>
+            <column name="site" value="test"/>
+            <column name="menu_se" value="S"/>
+            <column name="menu_nm" value="JWT테스트"/>
+            <column name="method" value="ALL"/>
+            <column name="url" value="/jwt"/>
+            <column name="auth" value="jwt"/>
+            <column name="crdt" valueDate="2021-03-29T16:30:21"/>
+            <column name="crid" value="system"/>
+            <column name="updt" valueDate="2021-03-29T16:30:29"/>
+            <column name="upid" value="system"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
