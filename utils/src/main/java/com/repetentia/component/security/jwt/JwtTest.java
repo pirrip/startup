@@ -12,14 +12,9 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.jwt.Jwt;
 
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.JwsHeader;
-import io.jsonwebtoken.JwtBuilder;
-import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.Header;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.SigningKeyResolver;
-import io.jsonwebtoken.SigningKeyResolverAdapter;
 
 public class JwtTest {
     public static String createToken() {
@@ -41,8 +36,9 @@ public class JwtTest {
         return tkn;
     }
     public static void main(String[] args) throws UnsupportedEncodingException {
-        System.out.println(createToken());
-        String tkn = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwaXJyaXBAbmF2ZXIuY29tIiwicm9sZXMiOlt7ImF1dGhvcml0eSI6Imp3dCJ9LHsiYXV0aG9yaXR5IjoidGVzdCJ9XSwiaWF0IjoxNjE3MDA0Mzc0LCJleHAiOjE2MTcwOTA3NzR9.DjnmPL2Zednky_Z4QflehwamMsQCbA4exQzF02KF4mdJB3smfGLAplxWYVsprGLLhkqo4q-maRUTCnACDOCA1Q";
+        String token = createToken();
+        System.out.println(token);
+
 //        Jws<Claims> claims = Jwts.parser().setSigningKey("secret").parseClaimsJws(tkn);
 //        System.out.println(claims);
 
@@ -59,26 +55,37 @@ public class JwtTest {
 //        io.jsonwebtoken.Jwt jwt = Jwts.parser().parse(tkn);
 //        System.out.println(jwt);
 
-        SigningKeyResolver signingKeyResolver = new SigningKeyResolverAdapter() {
-            @Override
-            public Key resolveSigningKey(JwsHeader header, Claims claims) {
-                    System.out.println(header);
-                    System.out.println(claims);
-                // Examine header and claims
-                return null; // will throw exception, can be caught in caller
-            }
-        };
-
-        try {
-            Claims c = Jwts.parser()
-                .setSigningKeyResolver(signingKeyResolver)
-                .parseClaimsJws(tkn)
-                .getBody();
-            System.out.println(c);
-        } catch (Exception e) {
-            e.printStackTrace();
-          // no signing key on client. We trust that this JWT came from the server and has been verified there
-        }
+//        SigningKeyResolver signingKeyResolver = new SigningKeyResolverAdapter() {
+//            @Override
+//            public Key resolveSigningKey(JwsHeader header, Claims claims) {
+//                    System.out.println(header);
+//                    System.out.println(claims);
+//                // Examine header and claims
+//                return null; // will throw exception, can be caught in caller
+//            }
+//        };
+//
+//        try {
+//            Claims c = Jwts.parser()
+//                .setSigningKeyResolver(signingKeyResolver)
+//                .parseClaimsJws(tkn)
+//                .getBody();
+//            System.out.println(c);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        io.jsonwebtoken.Jwt<Header, Claims> jwt = Jwts.parser().setSigningKey("youdon'tknowthesecret").parseClaimsJwt(token);
+        io.jsonwebtoken.Jwt<Header, Claims> jwt =Jwts.parser().setSigningKey("youdon'tknowthesecret").parse(token);
+//
+        Header header = jwt.getHeader();
+        Claims claims = jwt.getBody();
+        Date issuedAt = claims.getIssuedAt();
+        Date expiresAt = claims.getExpiration();
+//
+        Jwt jwtToken = new Jwt(token, issuedAt.toInstant(), expiresAt.toInstant(), header, claims);
+        System.out.println(jwtToken.getHeaders());
+        System.out.println(jwtToken.getSubject());
+        System.out.println(jwtToken);
     }
 
 }

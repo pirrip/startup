@@ -1,8 +1,15 @@
 package com.repetentia.component.security.jwt;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.util.ClassUtils;
@@ -15,12 +22,21 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         JwtAuthenticationToken authenticationToken = (JwtAuthenticationToken) authentication;
-        String principal = (String) authenticationToken.getPrincipal();
-        String credential = (String) authenticationToken.getCredentials();
-        authenticationToken.getAuthorities();
-        log.info("# principal - {} : credentials - {}", principal, credential);
         Jwt jwt = authenticationToken.getToken();
-        JwtAuthenticationToken authenticatedToken = new JwtAuthenticationToken(jwt, null);
+        String subj = jwt.getSubject();
+//        String principal = (String) authenticationToken.getPrincipal();
+//        String credential = (String) authenticationToken.getCredentials();
+//        authenticationToken.getAuthorities();
+//        log.info("# principal - {} : credentials - {}", principal, credential);
+//        Jwt jwt = authenticationToken.getToken();
+        List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+        GrantedAuthority ga = new SimpleGrantedAuthority("ROLE_jwt");
+        authorities.add(ga);
+        JwtAuthenticationToken authenticatedToken = new JwtAuthenticationToken(jwt, authorities);
+//        UsernamePasswordAuthenticationToken authenticatedToken = new UsernamePasswordAuthenticationToken(subj, "pwd", authorities);
+
+        log.info("# AUTHENTICATED");
+        SecurityContextHolder.getContext().setAuthentication(authenticatedToken);
         return authenticatedToken;
     }
 

@@ -115,6 +115,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     public RtaJwtAuthenticationFilter jwtAuthenticationFilter() {
         RtaJwtAuthenticationFilter rtaJwtAuthenticationFilter = new RtaJwtAuthenticationFilter();
+        rtaJwtAuthenticationFilter.setAuthenticationManager(getAuthenticationManager());
         return rtaJwtAuthenticationFilter;
     }
     @Override
