@@ -29,6 +29,15 @@ public class AjaxAuthenticationEntryPoint extends LoginUrlAuthenticationEntryPoi
         log.info("# HTTP HEADER FOR AJAX REQUEST - Accept: {}", accept);
         if (accept != null && accept.indexOf(MimeTypeUtils.APPLICATION_JSON_VALUE) > -1) {
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "NOT AUTHENTICATED (May Be Session Expired)");
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.setContentType("application/json;charset=UTF-8");
+            response.getWriter().write("{\r\n"
+                    + "    \"status\": 403,\r\n"
+                    + "    \"error\": \"UNAUTHORIZED\",\r\n"
+                    + "    \"message\": \"비인가\",\r\n"
+                    + "    \"path\": \"/web/jwt\"\r\n"
+                    + "}");
+            response.getWriter().flush();
         } else {
             super.commence(request, response, authException);
         }

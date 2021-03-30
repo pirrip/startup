@@ -5,9 +5,11 @@ import java.util.Collections;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.actuate.autoconfigure.security.servlet.ManagementWebSecurityAutoConfiguration;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.liquibase.LiquibaseAutoConfiguration;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
+import org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @ComponentScan(basePackages = { "com.repetentia.web.startup" })
 @SpringBootApplication
-//(exclude = { SecurityAutoConfiguration.class, ManagementWebSecurityAutoConfiguration.class })
+(exclude = { SecurityAutoConfiguration.class, ManagementWebSecurityAutoConfiguration.class, ErrorMvcAutoConfiguration.class })
 public class WebApplication {
 
     public static void main(String[] args) {

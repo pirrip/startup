@@ -31,12 +31,14 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
 //        Jwt jwt = authenticationToken.getToken();
         List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
         GrantedAuthority ga = new SimpleGrantedAuthority("ROLE_jwt");
+//        GrantedAuthority ra = new SimpleGrantedAuthority("ROLE_ANONYMOUS");
+
         authorities.add(ga);
+//        authorities.add(ra);
         JwtAuthenticationToken authenticatedToken = new JwtAuthenticationToken(jwt, authorities);
 //        UsernamePasswordAuthenticationToken authenticatedToken = new UsernamePasswordAuthenticationToken(subj, "pwd", authorities);
 
         log.info("# AUTHENTICATED");
-        SecurityContextHolder.getContext().setAuthentication(authenticatedToken);
         return authenticatedToken;
     }
 

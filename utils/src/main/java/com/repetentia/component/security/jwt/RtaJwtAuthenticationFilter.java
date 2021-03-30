@@ -10,6 +10,9 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.util.StringUtils;
@@ -28,7 +31,7 @@ public class RtaJwtAuthenticationFilter extends GenericFilterBean {
             throws IOException, ServletException {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         String bearer = httpServletRequest.getHeader("Authorization");
-        if (StringUtils.hasText(bearer) & bearer.startsWith("Bearer")) {
+        if (StringUtils.hasText(bearer) && bearer.startsWith("Bearer")) {
             String token = bearer.substring(7);
             log.info("TOKEN - {}", token);
             io.jsonwebtoken.Jwt<Header, Claims> jwt =Jwts.parser().setSigningKey("youdon'tknowthesecret").parse(token);
@@ -38,13 +41,18 @@ public class RtaJwtAuthenticationFilter extends GenericFilterBean {
             Date expiresAt = claims.getExpiration();
     //
             Jwt jwtToken = new Jwt(token, issuedAt.toInstant(), expiresAt.toInstant(), header, claims);
-            JwtAuthenticationToken authenticatedToken = new JwtAuthenticationToken(jwtToken);
-            authenticationManager.authenticate(authenticatedToken);
+            JwtAuthenticationToken authenticationToken = new JwtAuthenticationToken(jwtToken);
+            JwtAuthenticationToken authenticatedToken = (JwtAuthenticationToken)authenticationManager.authenticate(authenticationToken);
+            SecurityContext context = SecurityContextHolder.getContext();
+            context.setAuthentication(authenticatedToken);
             log.info("AUTH - {}", bearer);
+
+            chain.doFilter(request, response);
+            SecurityContextHolder.clearContext();
+
+        } else {
+            chain.doFilter(request, response);
         }
-
-
-        chain.doFilter(request, response);
     }
     public void setAuthenticationManager(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;

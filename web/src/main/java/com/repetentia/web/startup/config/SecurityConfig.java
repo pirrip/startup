@@ -53,7 +53,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public AuthenticationManager getAuthenticationManager() {
-        AuthenticationManager authenticationManager = new ProviderManager(Arrays.asList(jwtAuthenticationProvider(), rtaAuthenticationProvider()));
+//        AuthenticationManager authenticationManager = new ProviderManager(Arrays.asList(jwtAuthenticationProvider(), rtaAuthenticationProvider()));
+        AuthenticationManager authenticationManager = new ProviderManager(Arrays.asList(rtaAuthenticationProvider(), jwtAuthenticationProvider()));
         return authenticationManager;
     }
 
@@ -122,10 +123,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         String loginUrl = "/system/login";
         String loginProcessingUrl = "/system/processlogin";
+//        http.exceptionHandling().accessDeniedHandler(null);
         http.exceptionHandling()
                 .authenticationEntryPoint(new AjaxAuthenticationEntryPoint(loginUrl));
         http.addFilterBefore(filterSecurityInterceptor(), FilterSecurityInterceptor.class);
-        http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterAfter(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
         http.authorizeRequests()
                 .anyRequest()
