@@ -9,8 +9,8 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -18,13 +18,15 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.GenericFilterBean;
 
+import com.repetentia.component.log.RtaLogFactory;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Header;
 import io.jsonwebtoken.Jwts;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 public class RtaJwtAuthenticationFilter extends GenericFilterBean {
+    private static final Logger log = RtaLogFactory.getLogger(RtaJwtAuthenticationFilter.class);
+
     private AuthenticationManager authenticationManager;
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
@@ -46,9 +48,8 @@ public class RtaJwtAuthenticationFilter extends GenericFilterBean {
             SecurityContext context = SecurityContextHolder.getContext();
             context.setAuthentication(authenticatedToken);
             log.info("AUTH - {}", bearer);
-
             chain.doFilter(request, response);
-            SecurityContextHolder.clearContext();
+//            SecurityContextHolder.clearContext();
 
         } else {
             chain.doFilter(request, response);

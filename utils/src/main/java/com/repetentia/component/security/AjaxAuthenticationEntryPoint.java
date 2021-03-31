@@ -6,15 +6,17 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.util.MimeTypeUtils;
 
-import lombok.extern.slf4j.Slf4j;
+import com.repetentia.component.log.RtaLogFactory;
+import com.repetentia.support.log.Marker;
 
-@Slf4j
 public class AjaxAuthenticationEntryPoint extends LoginUrlAuthenticationEntryPoint {
+    private static final Logger log = RtaLogFactory.getLogger(AjaxAuthenticationEntryPoint.class);
 
     public AjaxAuthenticationEntryPoint(String loginFormUrl) {
         super(loginFormUrl);
@@ -23,10 +25,10 @@ public class AjaxAuthenticationEntryPoint extends LoginUrlAuthenticationEntryPoi
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
 
-        log.info("# {} - AJAX ENTRY POINT - {}", request.getRequestURI(), authException.getMessage());
+        log.info(Marker.AUTH, "# {} - AJAX ENTRY POINT - {}", request.getRequestURI(), authException.getMessage());
 
         String accept = ((HttpServletRequest) request).getHeader(HttpHeaders.ACCEPT);
-        log.info("# HTTP HEADER FOR AJAX REQUEST - Accept: {}", accept);
+        log.info(Marker.AUTH, "# HTTP HEADER FOR AJAX REQUEST - Accept: {}", accept);
         if (accept != null && accept.indexOf(MimeTypeUtils.APPLICATION_JSON_VALUE) > -1) {
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "NOT AUTHENTICATED (May Be Session Expired)");
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);

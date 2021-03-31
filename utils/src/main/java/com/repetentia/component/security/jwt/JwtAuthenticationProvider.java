@@ -3,21 +3,20 @@ package com.repetentia.component.security.jwt;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
 import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.util.ClassUtils;
 
-import lombok.extern.slf4j.Slf4j;
+import com.repetentia.component.log.RtaLogFactory;
 
-@Slf4j
 public class JwtAuthenticationProvider implements AuthenticationProvider {
+    private static final Logger log = RtaLogFactory.getLogger(JwtAuthenticationProvider.class);
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
@@ -34,9 +33,7 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
 //        GrantedAuthority ra = new SimpleGrantedAuthority("ROLE_ANONYMOUS");
 
         authorities.add(ga);
-//        authorities.add(ra);
         JwtAuthenticationToken authenticatedToken = new JwtAuthenticationToken(jwt, authorities);
-//        UsernamePasswordAuthenticationToken authenticatedToken = new UsernamePasswordAuthenticationToken(subj, "pwd", authorities);
 
         log.info("# AUTHENTICATED");
         return authenticatedToken;

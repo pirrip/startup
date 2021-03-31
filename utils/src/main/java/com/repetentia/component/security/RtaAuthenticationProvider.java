@@ -1,15 +1,16 @@
 package com.repetentia.component.security;
 
+import org.slf4j.Logger;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.dao.AbstractUserDetailsAuthenticationProvider;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
-import lombok.extern.slf4j.Slf4j;
+import com.repetentia.component.log.RtaLogFactory;
 
-@Slf4j
 public class RtaAuthenticationProvider extends AbstractUserDetailsAuthenticationProvider {
+    private static final Logger log = RtaLogFactory.getLogger(RtaAuthenticationProvider.class);
 
     private UserDetailsService userDetailsService;
 

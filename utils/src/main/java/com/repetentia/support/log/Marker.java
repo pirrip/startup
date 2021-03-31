@@ -19,6 +19,8 @@ public interface Marker {
     org.slf4j.Marker REST_POST = MarkerFactory.getMarker("REST-POST");
     org.slf4j.Marker POST = MarkerFactory.getMarker("POST");
     org.slf4j.Marker SQL = MarkerFactory.getMarker("SQL");
+    org.slf4j.Marker AUTH = MarkerFactory.getMarker("AUTH");
+
 
     org.slf4j.Marker TEST = MarkerFactory.getMarker("TEST");
 }

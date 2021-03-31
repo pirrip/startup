@@ -29,8 +29,10 @@ import com.repetentia.component.security.AjaxAuthenticationEntryPoint;
 import com.repetentia.component.security.DatabaseSecurityMetadataSource;
 import com.repetentia.component.security.RtaAffirmativeBased;
 import com.repetentia.component.security.RtaAuthenticationProvider;
+import com.repetentia.component.security.RtaLoginFailureHandler;
+import com.repetentia.component.security.RtaLoginSuccessHandler;
+import com.repetentia.component.security.RtaLogoutSuccessHandler;
 import com.repetentia.component.security.UrlSecuritySource;
-import com.repetentia.component.security.jwt.JwtAuthenticationFilter;
 import com.repetentia.component.security.jwt.JwtAuthenticationProvider;
 import com.repetentia.component.security.jwt.RtaJwtAuthenticationFilter;
 import com.repetentia.component.user.RtaUserDetailsService;
@@ -53,8 +55,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public AuthenticationManager getAuthenticationManager() {
-//        AuthenticationManager authenticationManager = new ProviderManager(Arrays.asList(jwtAuthenticationProvider(), rtaAuthenticationProvider()));
-        AuthenticationManager authenticationManager = new ProviderManager(Arrays.asList(rtaAuthenticationProvider(), jwtAuthenticationProvider()));
+//        AuthenticationManager authenticationManager = new ProviderManager(Arrays.asList(rtaAuthenticationProvider(), jwtAuthenticationProvider()));
+        AuthenticationManager authenticationManager = new ProviderManager(Arrays.asList(rtaAuthenticationProvider()));
         return authenticationManager;
     }
 
@@ -109,9 +111,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/static/**");
-//		web.ignoring().antMatchers("/system/**");
-//		web.ignoring().antMatchers("/error");
-//		web.ignoring().antMatchers("/**");
+//        web.ignoring().antMatchers("/system/**");
     }
 
     public RtaJwtAuthenticationFilter jwtAuthenticationFilter() {
@@ -119,15 +119,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         rtaJwtAuthenticationFilter.setAuthenticationManager(getAuthenticationManager());
         return rtaJwtAuthenticationFilter;
     }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        String loginUrl = "/system/login";
-        String loginProcessingUrl = "/system/processlogin";
-//        http.exceptionHandling().accessDeniedHandler(null);
+        log.trace("# Spring Security configure...");
+        final String loginUrl = "/system/log**";
+        final String loginProcessingUrl = "/system/processlogin";
+
+        http.addFilterAfter(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(filterSecurityInterceptor(), FilterSecurityInterceptor.class);
+
         http.exceptionHandling()
                 .authenticationEntryPoint(new AjaxAuthenticationEntryPoint(loginUrl));
-        http.addFilterBefore(filterSecurityInterceptor(), FilterSecurityInterceptor.class);
-        http.addFilterAfter(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
         http.authorizeRequests()
                 .anyRequest()
@@ -138,8 +141,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .passwordParameter("password")
                 .loginPage(loginUrl)
                 .loginProcessingUrl(loginProcessingUrl)
-//              .successHandler(loginSuccessHandler())
-//              .failureHandler(loginFailureHandler())
+//                .successHandler(rtaLoginSuccessHandler())
+//                .failureHandler(rtaLoginFailureHandler())
                 .and()
                 .csrf().disable();
         http.logout()
@@ -147,8 +150,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/system/login")
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID").permitAll()
-//                .logoutSuccessHandler(logoutHandler())
-        ;
+                .logoutSuccessHandler(rtaLogoutSuccessHandler());
     }
 
+    public RtaLoginSuccessHandler rtaLoginSuccessHandler() {
+        RtaLoginSuccessHandler rtaLoginSuccessHandler = new RtaLoginSuccessHandler();
+        return rtaLoginSuccessHandler;
+    }
+
+    public RtaLoginFailureHandler rtaLoginFailureHandler() {
+        RtaLoginFailureHandler rtaLoginFailureHandler = new RtaLoginFailureHandler();
+        return rtaLoginFailureHandler;
+    }
+    public RtaLogoutSuccessHandler rtaLogoutSuccessHandler() {
+        RtaLogoutSuccessHandler rtaLogoutSuccessHandler = new RtaLogoutSuccessHandler();
+        return rtaLogoutSuccessHandler;
+    }
 }

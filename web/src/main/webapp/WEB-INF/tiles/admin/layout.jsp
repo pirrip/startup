@@ -6,15 +6,19 @@
 <!DOCTYPE html>
 <html lang="ko-KR">
 <head>
-	<meta charset="utf-8">
+    <meta charset="utf-8">
     <meta http-equiv="Content-Language" content="ko">
-	<title></title>
-	<tiles:insertAttribute name="css" />
+    <title></title>
+    <tiles:insertAttribute name="css" />
 </head>
-<body>
-	<tiles:insertAttribute name="header" />
-	<tiles:insertAttribute name="content" />
-	<tiles:insertAttribute name="footer" />
-	<tiles:insertAttribute name="script" />
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+    <tiles:insertAttribute name="navbar" />
+    <tiles:insertAttribute name="sidebar" />
+    <tiles:insertAttribute name="content" />
+    <tiles:insertAttribute name="footer" />
+    <tiles:insertAttribute name="script" />
+    <tiles:insertAttribute name="js" />
+</div>
 </body>
 </html>

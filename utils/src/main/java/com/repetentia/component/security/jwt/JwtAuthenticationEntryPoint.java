@@ -6,15 +6,16 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.util.MimeTypeUtils;
 
-import lombok.extern.slf4j.Slf4j;
+import com.repetentia.component.log.RtaLogFactory;
 
-@Slf4j
 public class JwtAuthenticationEntryPoint extends LoginUrlAuthenticationEntryPoint {
+    private static final Logger log = RtaLogFactory.getLogger(JwtAuthenticationEntryPoint.class);
 
     public JwtAuthenticationEntryPoint(String loginFormUrl) {
         super(loginFormUrl);

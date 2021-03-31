@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.session.SqlSession;
+import org.slf4j.Logger;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -14,9 +15,12 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import com.repetentia.component.code.HttpMethod;
 import com.repetentia.component.code.UrlSe;
+import com.repetentia.component.log.RtaLogFactory;
+import com.repetentia.support.log.Marker;
 
 public class UrlSecuritySource {
-    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger("[# AUTHORIZING #]");
+    private static final Logger log = RtaLogFactory.getLogger(UrlSecuritySource.class);
+
     private SqlSession sqlSession;
 
     public UrlSecuritySource(SqlSession sqlSession) {
@@ -29,7 +33,8 @@ public class UrlSecuritySource {
         List<UrlSecurity> urlSecurities = sqlSession.getMapper(UrlSecurityMapper.class).findAll();
 
         for (UrlSecurity urlSecurity : urlSecurities) {
-            if (urlSecurity == null) continue;
+            if (urlSecurity == null)
+                continue;
             if (UrlSe.P.equals(urlSecurity.getMenuSe()) || UrlSe.S.equals(urlSecurity.getMenuSe())) {
                 String pattern = String.format("%s%s", urlSecurity.getUrl(), "**");
                 HttpMethod httpMethod = urlSecurity.getMethod();
@@ -61,7 +66,7 @@ public class UrlSecuritySource {
 
                 for (HttpMethod method : methodList) {
                     RequestMatcher requestMatcher = new AntPathRequestMatcher(pattern, method.code(), false);
-                    log.info("# URL pattern [{}][{}] for [{}]", pattern, method.code(), role);
+                    log.info(Marker.AUTH, "# URL pattern [{}][{}] for [{}]", pattern, method.code(), role);
                     List<ConfigAttribute> list = SecurityConfig.createList(role);
                     requestMap.put(requestMatcher, list);
                 }

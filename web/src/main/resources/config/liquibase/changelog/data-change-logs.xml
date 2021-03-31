@@ -3,7 +3,7 @@
     <changeSet author="user (generated)" id="10">
            <comment>사용자정보 데이터(usr_details)</comment>
         <insert tableName="usr_details">
-            <column name="uid" value="pirrip"/>
+            <column name="uid" value="pirrip@naver.com"/>
             <column name="pwd" value="test"/>
             <column name="account_non_expired" value="T"/>
             <column name="account_non_locked" value="T"/>
