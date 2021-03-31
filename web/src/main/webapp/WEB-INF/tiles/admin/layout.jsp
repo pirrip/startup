@@ -15,7 +15,10 @@
 <div class="wrapper">
     <tiles:insertAttribute name="navbar" />
     <tiles:insertAttribute name="sidebar" />
-    <tiles:insertAttribute name="content" />
+    <div class="content-wrapper">
+        <tiles:insertAttribute name="breadcrumb" />
+        <tiles:insertAttribute name="content" />
+    </div>
     <tiles:insertAttribute name="footer" />
     <tiles:insertAttribute name="script" />
     <tiles:insertAttribute name="js" />

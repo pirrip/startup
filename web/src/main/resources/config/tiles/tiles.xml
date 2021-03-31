@@ -10,9 +10,10 @@
     </definition>
 
     <definition name="tiles:*/*" template="/WEB-INF/tiles/admin/layout.jsp">
-         <put-attribute name="css" value="/WEB-INF/tiles/admin/layout.css.jsp" />
+        <put-attribute name="css" value="/WEB-INF/tiles/admin/layout.css.jsp" />
         <put-attribute name="navbar" value="/WEB-INF/tiles/admin/layout.navbar.jsp" />
         <put-attribute name="sidebar" value="/WEB-INF/tiles/admin/layout.sidebar.jsp" />
+        <put-attribute name="breadcrumb" value="/WEB-INF/tiles/admin/layout.breadcrumb.jsp" />
         <put-attribute name="content" value="/WEB-INF/views/{1}/{2}.jsp" />
         <put-attribute name="footer" value="/WEB-INF/tiles/admin/layout.footer.jsp" />
         <put-attribute name="script" value="/WEB-INF/tiles/admin/layout.script.jsp" />

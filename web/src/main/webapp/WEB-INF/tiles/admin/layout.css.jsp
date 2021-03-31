@@ -4,6 +4,8 @@
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
 <link rel="stylesheet" href="<c:url value='/static/plugins/fontawesome-free/css/all.min.css'/>">
+<link rel="stylesheet" href="<c:url value='/static/plugins/jsgrid/jsgrid.min.css'/>">
+<link rel="stylesheet" href="<c:url value='/static/plugins/jsgrid/jsgrid-theme.min.css'/>">
 <link rel="stylesheet" href="<c:url value='/static/dist/css/adminlte.min.css'/>">
 <style>
 </style>
